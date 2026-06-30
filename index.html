@@ -3,36 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHAWRIZM SOVEREIGN OS - OMEGA ARCHITECTURAL PORTFOLIO</title>
+    <title>KHAWRIZM SOVEREIGN OS - BILINGUAL EXECUTIVE PORTFOLIO</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vantablack: '#030303',
+                        cyanglow: '#00ffff',
+                        goldglow: '#ffd700',
+                        amberglow: '#ff8c00',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
-
-        :root {
-            --bg-color: #030303;
-            --text-primary: #e5e5e5;
-            --accent-cyan: #00ffff;
-            --accent-gold: #ffd700;
-            --accent-amber: #ff8c00;
-            --accent-glow: rgba(0, 255, 255, 0.12);
-            --card-bg: rgba(10, 10, 10, 0.95);
-            --border-color: rgba(255, 255, 255, 0.05);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Outfit', sans-serif;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* Ambient Constellation Network Canvas */
+        
         #quantum-canvas {
             position: fixed;
             top: 0;
@@ -43,389 +37,96 @@
             pointer-events: none;
             opacity: 0.65;
         }
-
-        header {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 85px 20px 45px;
-            border-bottom: 1px solid var(--border-color);
-            text-align: center;
-        }
-
-        .sys-classification {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-gold);
-            font-size: 0.85rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            display: inline-block;
-            border: 1px solid var(--accent-gold);
-            padding: 5px 15px;
-            border-radius: 2px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
-        }
-
-        h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            line-height: 1.1;
-            margin-bottom: 15px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
-        }
-
-        .architect {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.05rem;
-            color: var(--accent-gold);
-            margin-bottom: 25px;
-            letter-spacing: 0.1em;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-        }
-
-        .badges {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 25px;
-        }
-
-        .badge {
-            font-family: 'JetBrains Mono', monospace;
-            border: 1px solid var(--accent-cyan);
-            padding: 5px 14px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: var(--bg-color);
-            background-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
-            text-transform: uppercase;
-        }
-
-        .badge.gold {
-            border-color: var(--accent-gold);
-            background-color: transparent;
-            color: var(--accent-gold);
-            box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
-        }
-
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 60px 20px;
-        }
-
-        /* Executive Proposition Section */
-        .executive-box {
-            background: rgba(15, 15, 15, 0.95);
-            border: 1px solid rgba(255, 215, 0, 0.25);
-            border-radius: 4px;
-            padding: 50px 40px;
-            margin-bottom: 60px;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
-            backdrop-filter: blur(10px);
-        }
-
-        .executive-box h2 {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-gold);
-            font-size: 1.8rem;
-            margin-bottom: 25px;
-            letter-spacing: -0.01em;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-        }
-
-        .executive-box p {
-            color: #ccc;
-            font-size: 1.15rem;
-            margin-bottom: 20px;
-            line-height: 1.7;
-        }
-
-        .executive-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 35px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 30px;
-        }
-
-        @media (max-width: 768px) {
-            .executive-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .exec-col h4 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1rem;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-        }
-
-        .exec-col.current h4 {
-            color: var(--accent-cyan);
-        }
-
-        .exec-col.target h4 {
-            color: var(--accent-gold);
-        }
-
-        .exec-col ul {
-            list-style-type: square;
-            margin-left: 20px;
-            color: #aaa;
-            font-size: 0.95rem;
-        }
-
-        .exec-col li {
-            margin-bottom: 8px;
-        }
-
-        /* Pillars Grid styling */
-        .pillars-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 40px;
-            margin-bottom: 60px;
-        }
-
-        @media (max-width: 600px) {
-            .pillars-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 40px;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-        }
-
-        .card:hover {
-            border-color: var(--accent-cyan);
-            box-shadow: 0 0 25px rgba(0, 255, 255, 0.12);
-            transform: translateY(-3px);
-        }
-
-        .card-num {
-            font-family: 'JetBrains Mono', monospace;
-            color: var(--accent-cyan);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .maturity-tag {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--accent-gold);
-            border: 1px solid var(--accent-gold);
-            padding: 2px 8px;
-            border-radius: 2px;
-            text-transform: uppercase;
-        }
-
-        .card h2 {
-            font-size: 1.7rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            color: #fff;
-            letter-spacing: -0.01em;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
-            padding-bottom: 10px;
-        }
-
-        .card p {
-            color: #a5a5a5;
-            font-size: 0.95rem;
-            margin-bottom: 25px;
-        }
-
-        .card-spec {
-            font-family: 'JetBrains Mono', monospace;
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 3px;
-            padding: 15px;
-            border-left: 2px solid var(--accent-cyan);
-            font-size: 0.8rem;
-            color: #cccccc;
-            line-height: 1.5;
-        }
-
-        /* SVG Vector Diagrams styling */
-        .diagram-section {
-            background: rgba(8, 8, 8, 0.95);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 50px 40px;
-            margin-top: 60px;
-            backdrop-filter: blur(8px);
-        }
-
-        .diagram-section h3 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.5rem;
-            color: var(--accent-cyan);
-            margin-bottom: 30px;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-
-        .diagram-container {
-            width: 100%;
-            overflow-x: auto;
-            margin: 25px 0 45px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.02);
-            padding: 20px;
-            border-radius: 4px;
-        }
-
-        .diagram-container svg {
-            display: block;
-            margin: 0 auto;
-            max-width: 100%;
-        }
-
-        .proof-section {
-            background: rgba(10, 10, 10, 0.9);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 60px 40px;
-            margin-top: 60px;
-            backdrop-filter: blur(8px);
-        }
-
-        .proof-section h3 {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, var(--accent-gold) 0%, #fff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-family: 'JetBrains Mono', monospace;
-            letter-spacing: 0.05em;
-        }
-
-        .formula-block {
-            font-family: 'JetBrains Mono', monospace;
-            background: #000;
-            padding: 25px;
-            border-radius: 4px;
-            font-size: 0.95rem;
-            margin: 20px 0;
-            color: var(--accent-cyan);
-            overflow-x: auto;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-        }
-
-        .credentials {
-            margin-top: 60px;
-            padding: 40px;
-            background: rgba(0, 255, 255, 0.02);
-            border-left: 4px solid var(--accent-cyan);
-            border-radius: 0 4px 4px 0;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            border-right: 1px solid var(--border-color);
-        }
-
-        .credentials h3 {
-            color: var(--accent-cyan);
-            margin-bottom: 25px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 1.3rem;
-            letter-spacing: 0.05em;
-        }
-
-        .credentials ul {
-            list-style-type: none;
-        }
-
-        .credentials li {
-            margin-bottom: 12px;
-            font-size: 0.95rem;
-            font-family: 'JetBrains Mono', monospace;
-            color: #d5d5d5;
-        }
-
-        .credentials li::before {
-            content: "[VERIFIED] ";
-            color: var(--accent-gold);
-            font-weight: bold;
-        }
-
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 45px 20px;
-            text-align: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: #666;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        footer strong {
-            color: var(--accent-gold);
-        }
     </style>
 </head>
-<body>
+<body class="bg-vantablack text-gray-300 overflow-x-hidden line-height-relaxed">
 
-    <!-- Ambient Constellation Network Canvas -->
+    <!-- Ambient Constellation Canvas -->
     <canvas id="quantum-canvas"></canvas>
 
     <!-- Header Section -->
-    <header>
-        <div class="sys-classification">CLASSIFIED // SOVEREIGN INFRASTRUCTURE</div>
-        <h1>Khawrizm OS & Refinery</h1>
-        <div class="architect">ARCHITECT: SULAIMAN ALSHAMMARI (OpenSSF CERTIFIED)</div>
-        <div class="badges">
-            <div class="badge">DEPLOYS IN SILICON</div>
-            <div class="badge gold">eBPF ACTIVE AIRGAP</div>
-            <div class="badge">GHOST AI FORENSICS</div>
+    <header class="max-w-6xl mx-auto px-6 pt-20 pb-10 border-b border-white/5 text-center relative">
+        <div class="font-mono text-goldglow text-xs tracking-[0.25em] uppercase mb-5 border border-goldglow/30 px-3.5 py-1.5 inline-block rounded-sm shadow-[0_0_8px_rgba(255,215,0,0.15)]">
+            CLASSIFIED // SOVEREIGN INFRASTRUCTURE
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-cyanglow uppercase drop-shadow-[0_0_15px_rgba(0,255,255,0.25)]">
+            Khawrizm OS & Refinery
+        </h1>
+        <div class="font-mono text-sm text-goldglow tracking-wider mb-6">
+            ARCHITECT: SULAIMAN ALSHAMMARI (OpenSSF CERTIFIED)
+        </div>
+        <div class="flex justify-center flex-wrap gap-4 mt-6">
+            <span class="font-mono border border-cyanglow px-3.5 py-1 text-xs font-bold text-vantablack bg-cyanglow shadow-[0_0_15px_rgba(0,255,255,0.2)] uppercase">
+                DEPLOYS IN SILICON
+            </span>
+            <span class="font-mono border border-goldglow/50 px-3.5 py-1 text-xs font-bold text-goldglow shadow-[0_0_10px_rgba(255,215,0,0.1)] uppercase">
+                eBPF ACTIVE AIRGAP
+            </span>
+            <span class="font-mono border border-cyanglow px-3.5 py-1 text-xs font-bold text-vantablack bg-cyanglow shadow-[0_0_15px_rgba(0,255,255,0.2)] uppercase">
+                GHOST AI FORENSICS
+            </span>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main>
-        
-        <!-- Executive Proposition Section -->
-        <div class="executive-box">
-            <h2>Executive Proposition for Sovereign Decision Makers</h2>
-            <p>
+    <main class="max-w-6xl mx-auto px-6 py-16">
+
+        <!-- Arabic Executive Summary -->
+        <section class="bg-black/90 border border-goldglow/25 rounded p-10 mb-12 shadow-[0_0_30px_rgba(255,215,0,0.03)] backdrop-blur-md" dir="rtl">
+            <h2 class="font-mono text-goldglow text-2xl font-bold mb-6 tracking-wide drop-shadow-[0_0_8px_rgba(255,215,0,0.2)]">
+                الملخص التنفيذي السيادي (Sovereign Executive Proposition)
+            </h2>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                يمثل مشروع <strong>نظام تشغيل الخوارزمي (Khawrizm OS)</strong> حلقة وصل متكاملة تجمع بين متطلبات معالجة البيانات الجنائية الرقمية الفورية المعزولة تماماً، ورؤية السيادة التقنية المطلقة على مستوى هندسة السيليكون والعتاد (Hardware). يحل هذا النظام الثغرة الأمنية الجوهرية في محطات معالجة وتصفية البيانات التقليدية عبر التخلص التام من الاعتماد على الأجهزة والأنظمة التجارية غير الموثوقة أو المليئة بثغرات التتبع والاتصال الخارجي.
+            </p>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                ولغرض توفير حماية وسيادة تقنية فورية خلال فترة نضج واختبار العتاد، تم تصميم وتطوير النظام بـ <strong>بنية تشغيل ثنائية الطور (Bimodal Architecture)</strong>:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-white/5 pt-8">
+                <div class="border-r border-white/5 pr-4">
+                    <h4 class="font-mono text-cyanglow text-lg font-bold mb-4 uppercase">الطور الأول: مصفاة البيانات المعزولة (القدرة التشغيلية الحالية)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                        <li>العمل بكفاءة تامة على خوادم محلية معزولة شبكياً بشكل فيزيائي تام (Air-Gapped).</li>
+                        <li>التطهير التلقائي لمدخلات البيانات الجنائية والتخلص من عينات البيانات غير المرغوبة.</li>
+                        <li>إجراء التطهير الفوري والآمن للذاكرة العشوائية عتادياً وبرمجياً (Volatile Memory Scrubbing).</li>
+                        <li>توظيف جدران الحماية eBPF لمنع تسرب حزم البيانات بشكل مطلق.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono text-goldglow text-lg font-bold mb-4 uppercase">الطور الثاني: سيادة العتاد الكاملة (الرؤية المستقبلية)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                        <li>النقل الشامل للنظام ليعمل على شرائح معالجات مخصصة (RISC-V ASIC/FPGA).</li>
+                        <li>إحباط هجمات التنفيذ الاستباقي ومنافذ تسريب البيانات من نواة المعالج (Spectre/EntryBleed).</li>
+                        <li>تنفيذ عمليات استنباط نماذج الذكاء الاصطناعي عتادياً بالكامل داخل مسرع الشبكة العصبية (RoCC NPU).</li>
+                        <li>نقل البيانات المشفرة والآمنة بين العقد السيادية لاسلكياً عبر قنوات 6G ISAC معزولة تماماً.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- English Executive Summary -->
+        <section class="bg-black/95 border border-white/5 rounded p-10 mb-12 backdrop-blur-md">
+            <h2 class="font-mono text-cyanglow text-2xl font-bold mb-6 tracking-wide drop-shadow-[0_0_8px_rgba(0,255,255,0.2)]">
+                Executive Proposition for Sovereign Decision Makers
+            </h2>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
                 The <strong>Khawrizm OS Initiative</strong> bridges the immediate requirements of high-performance off-grid forensic data processing with the ultimate physical-layer security of custom non-speculative hardware. It resolves the core vulnerability of modern data refineries by eliminating reliance on closed-source, untrusted software platforms and telemetry-heavy computing architectures.
             </p>
             <p>
                 To provide immediate operational utility while hardware development matures, the stack deploys in a <strong>bimodal architecture</strong>:
             </p>
-            
-            <div class="executive-grid">
-                <div class="exec-col current">
-                    <h4>Phase 1: Grounded Refinery (Immediate Capability)</h4>
-                    <ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-white/5 pt-8">
+                <div>
+                    <h4 class="font-mono text-cyanglow text-base font-bold mb-4 uppercase">Phase 1: Grounded Refinery (Immediate Capability)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
                         <li>Runs on standard air-gapped Linux hardware.</li>
                         <li>Automated Kali noise/kerning cleanup and extraction.</li>
                         <li>Volatile memory scrubbing stubs deployed in user-space.</li>
                         <li>eBPF sandboxing enforces complete telemetry sinkholes.</li>
                     </ul>
                 </div>
-                <div class="exec-col target">
-                    <h4>Phase 2: Silicon-Hardened OS (End-State Vision)</h4>
-                    <ul>
+                <div>
+                    <h4 class="font-mono text-goldglow text-base font-bold mb-4 uppercase">Phase 2: Silicon-Hardened OS (End-State Vision)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
                         <li>Full port to custom FPGA/ASIC RISC-V hardware cores.</li>
                         <li>Speculation side-channels neutralized at logic-gate level (NDA).</li>
                         <li>Real-time neural accelerators executing LLM models in hardware.</li>
@@ -433,82 +134,84 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Pillars Grid -->
-        <div class="pillars-grid">
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
             <!-- Pillar 1 -->
-            <div class="card">
-                <div class="card-num">
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
                     <span>[PILLAR_01]</span>
-                    <span class="maturity-tag">[Active: FPGA netlist]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: FPGA NETLIST]</span>
                 </div>
-                <h2>RISC-V NDA Silicon & zk-SNARKs</h2>
-                <p>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">RISC-V NDA Silicon & zk-SNARKs</h2>
+                <p class="text-gray-400 text-sm mb-6">
                     Neutralizes speculative execution and side-channel threats (Spectre/EntryBleed) at the logic gate level using Non-speculative Data Access (NDA). System state changes are cryptographically proven using Zero-Knowledge proofs.
                 </p>
-                <div class="card-spec">
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
                     CHISEL: class BranchTargetBufferBarrier extends Module<br>
                     FFI: fn zk_snark_prove_provenance(graph: &ProvenanceGraph)
                 </div>
             </div>
 
             <!-- Pillar 2 -->
-            <div class="card">
-                <div class="card-num">
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
                     <span>[PILLAR_02]</span>
-                    <span class="maturity-tag">[Active: Ring-0 FFI]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: RING-0 FFI]</span>
                 </div>
-                <h2>Ring0 Ghost AI & Volatile RAM Scrubbing</h2>
-                <p>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">Ring0 Ghost AI & Volatile RAM Scrubbing</h2>
+                <p class="text-gray-400 text-sm mb-6">
                     A freestanding AI security governor (llama.cpp) embedded directly in Ring0 space. Implements immediate volatile RAM zero-overwriting using compiler-resistant memory barriers, neutralizing forensic extraction.
                 </p>
-                <div class="card-spec">
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
                     C++: void secure_scrub_memory(void *buf, size_t len)<br>
                     RUST: pub fn run_ai_governance(data: &[u8])
                 </div>
             </div>
 
             <!-- Pillar 3 -->
-            <div class="card">
-                <div class="card-num">
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
                     <span>[PILLAR_03]</span>
-                    <span class="maturity-tag">[Active: DPDK bypass]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: DPDK BYPASS]</span>
                 </div>
-                <h2>DPDK Kernel-Bypass & SR-IOV Isolation</h2>
-                <p>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">DPDK Kernel-Bypass & SR-IOV Isolation</h2>
+                <p class="text-gray-400 text-sm mb-6">
                     Replaces the entire Linux TCP/IP socket layer with a user-space bypass stack. Bridges network interfaces directly to raw DPDK virtual rings and severs host access via SR-IOV Virtual Function mapping.
                 </p>
-                <div class="card-spec">
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
                     DPDK: void joyride_sriov_init(int vf_index)<br>
                     BYPASS: Intercepts socket() connect() send() recv()
                 </div>
             </div>
 
             <!-- Pillar 4 -->
-            <div class="card">
-                <div class="card-num">
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
                     <span>[PILLAR_04]</span>
-                    <span class="maturity-tag">[Active: CSI stubs]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: CSI STUBS]</span>
                 </div>
-                <h2>6G ISAC Beamforming & TACO Spatial Radar</h2>
-                <p>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">6G ISAC Beamforming & TACO Spatial Radar</h2>
+                <p class="text-gray-400 text-sm mb-6">
                     Bends the physical environment. Repurposes the TACO spreadsheet R-Tree dependency solver into a 3D physical spatial index mapping wireless Channel State Information (CSI) multipath delays into a passive radar map.
                 </p>
-                <div class="card-spec">
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
                     CSI: void joyride_csi_extract(const uint8_t *frame)<br>
                     3D INDEX: pub struct BoundingBox3D
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Vector Engineering Diagram Section -->
-        <div class="diagram-section">
-            <h3>System Architecture Vector Diagrams</h3>
+        <section class="bg-black/95 border border-white/5 rounded p-10 mb-12">
+            <h3 class="font-mono text-cyanglow text-xl font-bold mb-8 uppercase tracking-wide">
+                System Architecture Vector Diagrams
+            </h3>
             
-            <p><strong>Diagram 1: Full System Data Flow Model</strong></p>
-            <div class="diagram-container">
-                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg">
+            <p class="font-bold mb-2">Diagram 1: Full System Data Flow Model</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
                     <defs>
                         <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
@@ -545,9 +248,9 @@
                 </svg>
             </div>
 
-            <p><strong>Diagram 2: Hardware/AI Fusion & Speculative Isolation Model</strong></p>
-            <div class="diagram-container">
-                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg">
+            <p class="font-bold mb-2">Diagram 2: Hardware/AI Fusion & Speculative Isolation Model</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
                     <defs>
                         <marker id="arrow2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
@@ -586,9 +289,9 @@
                 </svg>
             </div>
 
-            <p><strong>Diagram 3: Post-Quantum Provenance Ledger Chain</strong></p>
-            <div class="diagram-container">
-                <svg width="850" height="150" viewBox="0 0 850 150" xmlns="http://www.w3.org/2000/svg">
+            <p class="font-bold mb-2">Diagram 3: Post-Quantum Provenance Ledger Chain</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="150" viewBox="0 0 850 150" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
                     <defs>
                         <marker id="arrow3" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
@@ -621,9 +324,9 @@
                 </svg>
             </div>
 
-            <p><strong>Diagram 4: Ghost AI Ring-0 Memory Scrubbing Pipeline</strong></p>
-            <div class="diagram-container">
-                <svg width="850" height="220" viewBox="0 0 850 220" xmlns="http://www.w3.org/2000/svg">
+            <p class="font-bold mb-2">Diagram 4: Ghost AI Ring-0 Memory Scrubbing Pipeline</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="220" viewBox="0 0 850 220" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
                     <defs>
                         <linearGradient id="scrubGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                             <stop offset="0%" stop-color="#ff3333" stop-opacity="0.8" />
@@ -663,9 +366,9 @@
                 </svg>
             </div>
 
-            <p><strong>Diagram 5: TACO Spatial Indexing & 6G ISAC Radar Mapping</strong></p>
-            <div class="diagram-container">
-                <svg width="850" height="260" viewBox="0 0 850 260" xmlns="http://www.w3.org/2000/svg">
+            <p class="font-bold mb-2">Diagram 5: TACO Spatial Indexing & 6G ISAC Radar Mapping</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded">
+                <svg width="850" height="260" viewBox="0 0 850 260" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
                     <defs>
                         <marker id="arrow5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
@@ -704,42 +407,52 @@
                     <text x="720" y="205" fill="#ff8c00" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Millimeter Resolution</text>
                 </svg>
             </div>
-        </div>
+        </section>
 
         <!-- Credentials section -->
-        <div class="credentials">
-            <h3>CRYPTOGRAPHICALLY VERIFIED CREDENTIALS</h3>
-            <ul>
-                <li>The Linux Foundation / OpenSSF: Developing Secure Software (LFD121)</li>
-                <li>The Linux Foundation: Security for Software Development Managers (LFD125)</li>
-                <li>The Linux Foundation: Linux Kernel Development (LFD103_JP)</li>
+        <div class="credentials bg-cyanglow/[0.02] border-l-4 border-cyanglow rounded-r border-y border-r border-white/5 p-10 mt-12">
+            <h3 class="font-mono text-cyanglow text-lg font-bold mb-6 tracking-wide">
+                CRYPTOGRAPHICALLY VERIFIED CREDENTIALS
+            </h3>
+            <ul class="font-mono text-sm text-gray-300 space-y-3">
+                <li class="before:content-['[VERIFIED]_'] before:text-goldglow before:font-bold">
+                    The Linux Foundation / OpenSSF: Developing Secure Software (LFD121)
+                </li>
+                <li class="before:content-['[VERIFIED]_'] before:text-goldglow before:font-bold">
+                    The Linux Foundation: Security for Software Development Managers (LFD125)
+                </li>
+                <li class="before:content-['[VERIFIED]_'] before:text-goldglow before:font-bold">
+                    The Linux Foundation: Linux Kernel Development (LFD103_JP)
+                </li>
             </ul>
         </div>
 
         <!-- Proof Section -->
-        <div class="proof-section">
-            <h3>[MATHEMATICAL_PROOF_OF_INVULNERABILITY]</h3>
-            <p>
+        <div class="proof-section bg-black/90 border border-white/5 rounded p-10 mt-12">
+            <h3 class="font-mono text-goldglow text-lg font-bold mb-6 tracking-wide">
+                [MATHEMATICAL_PROOF_OF_INVULNERABILITY]
+            </h3>
+            <p class="text-sm mb-4">
                 The physical security posture is proven through strict non-speculative data propagation tags. A speculative instruction $i \in I_{spec}$ along a branch cannot leak information via caching state if tags are held until architectural commitment:
             </p>
-            <div class="formula-block">
+            <div class="font-mono bg-black p-6 rounded text-sm text-cyanglow overflow-x-auto border border-white/5 mb-6">
                 &forall; i &isin; I_spec,  Wakeup(i) &rArr; ( &forall; p &isin; Producers(i),  Status(p) = Committed )
             </div>
-            <p>
+            <p class="text-sm mb-4">
                 The cryptographic ledger integrity is validated under blind verification. For any state transition, the verifier validates the R1CS constraints of the zk-SNARK proof without exposure to the raw event log bytes:
             </p>
-            <div class="formula-block">
+            <div class="font-mono bg-black p-6 rounded text-sm text-cyanglow overflow-x-auto border border-white/5">
                 P( Retrieve(P_s, W) | T_carve > T_inf ) = 0
             </div>
         </div>
     </main>
 
     <!-- Footer -->
-    <footer>
-        KHAWRIZM DATA REFINERY // SIGNED DETACHED: <strong>Dilithium2 + SPHINCS+</strong> // SECURE DEPLOYMENT
+    <footer class="border-t border-white/5 py-12 text-center font-mono text-xs text-gray-500 max-w-6xl mx-auto">
+        KHAWRIZM DATA REFINERY // SIGNED DETACHED: <strong class="text-goldglow">Dilithium2 + SPHINCS+</strong> // SECURE DEPLOYMENT
     </footer>
 
-    <!-- Constellation Wave Background Script -->
+    <!-- Constellation Background Script -->
     <script>
         const canvas = document.getElementById('quantum-canvas');
         const ctx = canvas.getContext('2d');
