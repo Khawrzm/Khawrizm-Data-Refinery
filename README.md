@@ -2,64 +2,64 @@
 
 **Document Classification:** RING-0 SOVEREIGN INFRASTRUCTURE
 **Component Designation:** Ring-0 Master Synthesizer
-**Version:** 1.6
+**Version:** 1.7
 **Date:** 2026-06-30
 **Architect:** Sulaiman Alshammari / KHAWRIZM Forensic Labs
 
 ## 1. PURPOSE
 
-v1.6 reaches Sovereign Singularity: the pipeline is now a bootable Unikernel (ring0_unikernel) that eliminates the Linux kernel attack surface entirely. LLM inference and raw data reside exclusively in hardware TEE (ARM TrustZone / RISC-V PMP) with encrypted RAM. Data provenance is future-proofed with Post-Quantum Cryptography (Dilithium + SPHINCS+). No Linux, no POSIX, no TCP, no interpreted languages, no classical crypto.
+v1.7 achieves silicon-level sovereignty by burning the pipeline into custom RISC-V silicon. A Chisel-defined RoCC coprocessor (khawrizm_isa_extensions.scala) implements JSON schema validation and Regex stripping at the logic-gate level. The Unikernel offloads parsing to custom instructions (kzm.json.verify, kzm.regex.strip), eliminating software timing side-channels. The entire core + coprocessor is synthesized to a vendor-independent FPGA bitstream via open EDA tools.
 
 ## 2. ARCHITECTURAL COMPONENTS
 
-### 2.1 ring0_unikernel.rs (NEW v1.6)
-- Fully standalone Unikernel binary (hermit-sys / unikraft-rs target)
-- Boots directly on bare-metal ARM64/RISC-V or as Type-1 hypervisor guest
-- Eliminates all OS context switches, daemons, and privilege rings
-- Integrates extraction (memmap-equivalent + SIMD), TEE fencing, and in-memory FFI/LLM
+### 2.1 khawrizm_isa_extensions.scala (NEW v1.7)
+- Chisel RoCC module for Rocket Chip / VexRiscv
+- Custom opcodes in custom0 space: kzm.json.verify (funct=0), kzm.regex.strip (funct=1)
+- Hardware FSM for JSON structural validation and byte-level Regex stripping pipeline
+- Bypasses all software parsers and allocators
 
-### 2.2 tee_hardware_enclave.c (NEW v1.6)
-- ARM TrustZone SMC or RISC-V PMP setup to fence LLM weights + extracted data into encrypted TEE region
-- Neutralizes cold-boot, DMA, and physical memory extraction attacks
-- Called early in Unikernel boot before any model or data touch
+### 2.2 ring0_unikernel.rs (v1.7)
+- Updated with inline `asm!` targeting the new Khawrizm ISA extensions
+- Offloads sanitization and validation to hardware coprocessor
+- Retains Unikernel boot, TEE fencing, and PQ signing
 
-### 2.3 pq_provenance.rs (NEW v1.6)
-- Post-Quantum signer using pqcrypto-dilithium + pqcrypto-sphincsplus
-- Produces quantum-resistant detached signatures for Master_Ring0.md
-- OpenSSF-aligned; replaces all legacy GPG/RSA
+### 2.3 fpga_synthesizer.sh (NEW v1.7)
+- Open EDA flow: Chisel → Verilog → Yosys synthesis → nextpnr P&R → ecppack / openFPGALoader bitstream
+- Targets Lattice ECP5, iCE40, or Xilinx Artix-7 (vendor-neutral)
+- Includes Verilator co-simulation for verification
 
-### 2.4 Cargo.toml (v1.6)
-- Added hermit-sys (Unikernel), pqcrypto-* crates, enclave feature flags
-- Cross-compilation targets for aarch64/riscv64 Unikernel images
-
-### 2.5 llm_ffi_bridge.rs + ebpf (legacy)
-- FFI bridge retained/adapted for Unikernel no_std environment
-- eBPF XDP layer optional or replaced by Unikernel hypervisor network isolation
+### 2.4 Cargo.toml + build_sovereign.sh
+- Extended with Chisel/rocket-chip build flow and FPGA targets
 
 ## 3. OPERATIONAL MANDATE
 
-Boot Unikernel image → TEE fence LLM+data → Zero-copy SIMD extraction → In-memory grammar-constrained inference → PQ sign Master_Ring0.md → Halt.
-No kernel. No network. No classical crypto. Mathematical sovereignty.
+Chisel → Verilog → Yosys/nextpnr → Flash bitstream to FPGA.
+Unikernel boots on the custom silicon.
+Hardware instructions accelerate extraction/sanitization at gate level.
+TEE + PQ provenance unchanged.
+Result: Master_Ring0.md produced on sovereign custom RISC-V silicon.
 
 ## 4. SECURITY & SOVEREIGNTY POSTURE
-- Unikernel: zero Linux kernel attack surface
-- TEE + encrypted RAM: physical memory protection (TrustZone/PMP)
-- Post-Quantum signatures: quantum-resistant provenance (Dilithium + SPHINCS+)
-- Memory-safe Rust, static Unikernel image
-- In-memory FFI inference (no sockets)
-- SIMD hardware acceleration (NEON / RISC-V V)
+- Custom ISA extensions (no software parsing)
+- Gate-level JSON/Regex (zero timing side-channels from software)
+- Full FPGA bitstream from open tools (supply-chain independence)
+- Unikernel + TEE + Post-Quantum signatures
+- Absolute silicon sovereignty on KhawrizmOS
 
-## 5. BUILD & RUN (v1.6)
+## 5. BUILD & DEPLOY (v1.7)
 
 ```bash
-# Build Unikernel image (requires Hermit/Unikraft toolchain + TEE/PQC support)
-./build_sovereign.sh --unikernel --tee --pqc
+# 1. Generate Verilog + synthesize
+./fpga_synthesizer.sh
 
-# Boot on bare-metal or hypervisor
-qemu-system-aarch64 -kernel ring0_unikernel -machine virt,secure=on ...
+# 2. Flash bitstream (example ECP5)
+openFPGALoader -b ecp5_evn khawrizm_v1.7.bit
 
-# Verify PQ signature
-pq_provenance verify Master_Ring0.md Master_Ring0.md.sig
+# 3. Boot Unikernel on FPGA fabric
+# (via serial or JTAG loader)
+
+# Verify custom instructions in silicon
+objdump -d ring0_unikernel | grep kzm
 ```
 
-**End of Ring-0 Master Synthesizer Architectural Specification (v1.6)**
+**End of Ring-0 Master Synthesizer Architectural Specification (v1.7)**
