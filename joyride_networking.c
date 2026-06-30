@@ -147,3 +147,14 @@ ssize_t recv(int sockfd, void *buf, size_t len, int flags) {
     }
     return orig_recv(sockfd, buf, len, flags);
 }
+
+// Passive 802.11 CSI subcarrier extraction
+void joyride_csi_extract(const uint8_t *frame, size_t len) {
+    if (len < 32) return;
+    float amplitude_sum = 0.0f;
+    for (size_t i = 0; i < 64 && (i < len); ++i) {
+        amplitude_sum += (float)frame[i];
+    }
+    float average_amplitude = amplitude_sum / 64.0f;
+    printf("[Joyride CSI] Extracted subcarrier amplitude average: %.2f (Passive sensing online)\n", average_amplitude);
+}

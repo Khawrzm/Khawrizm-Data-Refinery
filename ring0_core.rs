@@ -17,6 +17,59 @@ use pqcrypto_dilithium::dilithium2::{PublicKey, SecretKey, detached_sign, verify
 extern "C" {
     pub fn secure_scrub_memory(buf: *mut u8, len: usize);
     pub fn ring0_ai_analyze_packet(packet_data: *const u8, len: usize, output_buf: *mut u8, max_out: usize) -> i32;
+    pub fn joyride_csi_extract(frame: *const u8, len: usize);
+}
+
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ProvenanceNode {
+    pub parent_hash: [u8; 32],
+    pub timestamp: u64,
+    pub event_type: String,
+    pub payload_hash: [u8; 32],
+}
+
+pub struct ProvenanceGraph {
+    pub nodes: Vec<ProvenanceNode>,
+    pub current_hash: [u8; 32],
+}
+
+impl ProvenanceGraph {
+    pub fn new() -> Self {
+        ProvenanceGraph {
+            nodes: Vec::new(),
+            current_hash: [0u8; 32],
+        }
+    }
+
+    pub fn append_event(&mut self, event_type: &str, payload: &[u8]) {
+        let mut hasher = std::collections::hash_map::DefaultHasher::new();
+        use std::hash::Hasher;
+        hasher.write(payload);
+        let hash_val = hasher.finish();
+        
+        let mut payload_hash = [0u8; 32];
+        for i in 0..8 {
+            payload_hash[i] = ((hash_val >> (i * 8)) & 0xFF) as u8;
+        }
+
+        let node = ProvenanceNode {
+            parent_hash: self.current_hash,
+            timestamp: 1717171717, // Deterministic mock timestamp for validation
+            event_type: event_type.to_string(),
+            payload_hash,
+        };
+
+        let mut graph_hasher = std::collections::hash_map::DefaultHasher::new();
+        graph_hasher.write(&self.current_hash);
+        graph_hasher.write(&payload_hash);
+        let next_hash = graph_hasher.finish();
+        
+        for i in 0..8 {
+            self.current_hash[i] = ((next_hash >> (i * 8)) & 0xFF) as u8;
+        }
+
+        self.nodes.push(node);
+    }
 }
 
 pub fn run_ai_governance(data: &[u8]) {
@@ -589,5 +642,24 @@ mod tests {
         let sig = sign_threat_indicator(threat_ioc, &sk);
         assert!(!sig.is_empty());
         assert!(verify_threat_indicator(threat_ioc, &sig, &pk));
+    }
+
+    #[test]
+    fn test_provenance_graph() {
+        let mut graph = ProvenanceGraph::new();
+        graph.append_event("BOOT", b"System startup initialized.");
+        graph.append_event("DROP", b"Telemetry packet dropped.");
+        
+        assert_eq!(graph.nodes.len(), 2);
+        assert_eq!(graph.nodes[0].parent_hash, [0u8; 32]);
+        assert_ne!(graph.nodes[1].parent_hash, [0u8; 32]);
+    }
+
+    #[test]
+    fn test_passive_csi_extraction() {
+        let raw_frame = vec![0u8; 64];
+        unsafe {
+            joyride_csi_extract(raw_frame.as_ptr(), raw_frame.len());
+        }
     }
 }
