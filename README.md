@@ -2,79 +2,70 @@
 
 **Document Classification:** RING-0 SOVEREIGN INFRASTRUCTURE
 **Component Designation:** Ring-0 Master Synthesizer
-**Version:** 1.2
+**Version:** 1.3
 **Date:** 2026-06-30
 **Architect:** Sulaiman Alshammari / KHAWRIZM Forensic Labs
 
 ## 1. PURPOSE
 
-This repository implements the zero-telemetry, air-gapped "Sovereign Data Grinder" pipeline v1.2 with kernel-enforced network isolation (eBPF/XDP), task-parallel extraction on ARM64/RISC-V, flock-protected deterministic appends, and cryptographic provenance. It ingests arbitrary file formats and produces `Master_Ring0.md` optimized for NotebookLM under absolute sovereignty constraints.
+v1.3 completes the sovereign stack by replacing the Python extraction layer with a memory-safe Rust core (`ring0_core`). This eradicates GIL contention and C FFI attack surface while delivering zero-allocation parsing and explicit ARM64 NEON / RISC-V Vector (V) acceleration targets. The pipeline now executes a statically linked binary with zero runtime dependencies on KhawrizmOS.
 
 ## 2. ARCHITECTURAL COMPONENTS
 
-### 2.1 ring0_extractor.py (v1.2)
-- **Context:** Ring-0 offline extraction engine with parallel acceleration
-- **Dependencies:** Python 3 standard library (zipfile, xml.etree.ElementTree, zlib, re, html.parser, concurrent.futures)
-- **Capabilities:** PDF/DOCX/XLSX/PPTX/HTML/plain + cleaning/kerning/Arabic fixes
-- **v1.2:** process_directory_parallel() using ProcessPoolExecutor(max_workers) for concurrent multi-file extraction on high-core ARM64/RISC-V. Backward compatible single-file mode.
+### 2.1 ring0_core.rs (NEW v1.3 - Replaces ring0_extractor.py)
+- **Language:** Rust 2021 (no GIL, no Python C extensions)
+- **Memory Safety:** Ownership + borrow checker eliminates entire classes of buffer overflows, use-after-free, and data races present in C/Python FFI.
+- **Zero-Allocation Focus:** Heavy use of `&str` / `&[u8]` slices, `String::with_capacity`, minimal intermediate Vecs in hot paths (kerning, Arabic reversal, terminal cleaning).
+- **Hardware Acceleration:** Code structured for autovectorization. On aarch64: NEON via target_feature or portable_simd. On riscv64gc: Vector extension (V) for byte-level chunking and string ops. Build script targets these ISAs explicitly.
+- **Extraction:** PDF (ZlibDecoder + regex Tj), DOCX/XLSX (zip + regex <w:t>/<t>), plain text. Cleaning identical to v1.x (terminal noise, kerning repair, Arabic RTL reversal).
+- **CLI:** Single binary `ring0_core <file|dir>` — stdout is clean text ready for sanitizer pipe.
 
-### 2.2 api_sanitizer.py
-- External API path (see v1.0)
+### 2.2 build_sovereign.sh (NEW v1.3)
+- Reproducible cargo build for `aarch64-unknown-linux-musl` and `riscv64gc-unknown-linux-gnu`.
+- Produces fully static binaries (musl libc) — zero runtime deps, immune to glibc version or supply-chain .so injection.
+- Pins exact crate versions (zip, flate2, regex) + --locked for deterministic artifacts.
+- Output: `artifacts/ring0_core-<target>` ready for deployment on KhawrizmOS nodes.
 
-### 2.3 airgapped_sanitizer.py
-- Local Ollama path (see v1.1)
+### 2.3 grinder_pipeline.sh (v1.3)
+- Executes `./ring0_core` binary directly (replaces `python3 ring0_extractor.py`).
+- `--airgap` + `--parallel` flags preserved. `flock` serialized append and GPG `.sig` unchanged.
+- Requires `ring0_core` in PATH or same dir (built by `build_sovereign.sh`).
 
-### 2.4 grinder_pipeline.sh (v1.2)
-- **Context:** Kali Linux orchestration with concurrency control
-- **v1.2 Flags:**
-  - `--airgap` : route to local inference
-  - `--parallel` : enable xargs -P + ProcessPoolExtractor path + flock serialized append to Master_Ring0.md
-- **Locking:** flock(1) on file descriptor during >> to guarantee race-free, chronologically consistent Markdown blocks under parallel workloads
-- **Provenance:** Automatic GPG .sig on completion
-
-### 2.5 ebpf_airgap_enforcer.c (NEW v1.2)
-- **Context:** Ring-0 kernel network enforcer
-- **Language:** C99/C11 BPF
-- **Mechanism:** XDP hook. Parses eth/ip. Drops any packet whose IPv4 dst != 127.0.0.1 (INADDR_LOOPBACK). Provides mathematically enforced kill-switch against any telemetry or external API calls, even if user-space sanitizer misconfigures. Respects pipeline UID/PID context via bpf_get_current_* helpers (extensible).
-- **Compilation:** clang -target bpf -O2 -c -o ebpf_airgap_enforcer.o ebpf_airgap_enforcer.c
-- **Load (example):** ip link set dev lo xdpgeneric obj ebpf_airgap_enforcer.o sec xdp
-- **Effect:** Only localhost (Ollama) traffic passes; all other outbound IP is dropped at earliest kernel stage.
+### 2.4 airgapped_sanitizer.py + api_sanitizer.py + ebpf_airgap_enforcer.c
+- Unchanged from v1.2 (local Ollama JSON enforcement + kernel XDP kill-switch).
 
 ## 3. OPERATIONAL MANDATE
 
-Extraction: offline + optional ProcessPool parallel.
-Sanitization: JSON-schema enforced (local or remote).
-Network: XDP kernel drop non-localhost.
-Append: flock serialized for determinism.
-Output: Master_Ring0.md + .sig for verifiable sovereign corpus.
+Extraction now memory-safe + hardware-accelerated Rust binary.
+Sanitization: strict JSON schema (local preferred).
+Network boundary: XDP drops non-127.0.0.1.
+Append: flock deterministic.
+Provenance: GPG signature.
+Result: `Master_Ring0.md` is the canonical NotebookLM-ready artifact produced under absolute sovereignty.
 
-## 4. SECURITY POSTURE
-- Zero telemetry (user-space + kernel XDP)
-- Air-gapped extraction + local inference
-- Kernel-enforced network boundary (eBPF/XDP)
-- Strict JSON determinism
-- flock + GPG supply chain integrity
-- Full local sovereignty on ARM64/RISC-V
+## 4. SECURITY & PERFORMANCE POSTURE
+- Memory safety by construction (Rust)
+- Zero runtime dependencies (static musl)
+- GIL elimination + SIMD targets = higher throughput on ARM64/RISC-V
+- Kernel-enforced airgap (eBPF/XDP)
+- Cryptographic supply chain (GPG + reproducible build)
 
-## 5. EXECUTION PARAMETERS (v1.2)
+## 5. BUILD & EXECUTION (v1.3)
 
 ```bash
-# Airgapped + parallel on multi-core
-./grinder_pipeline.sh --airgap --parallel /path/to/massive_raw_data
+# 1. Build static sovereign binaries
+./build_sovereign.sh
 
-# Compile & load eBPF airgap enforcer (requires root)
-clang -target bpf -O2 -c -o ebpf_airgap_enforcer.o ebpf_airgap_enforcer.c
-ip link set dev lo xdpgeneric obj ebpf_airgap_enforcer.o sec xdp
-# Verify: bpftool prog list | grep airgap
+# 2. Deploy (example on KhawrizmOS node)
+cp artifacts/ring0_core-aarch64-unknown-linux-musl /usr/local/bin/ring0_core
+chmod +x /usr/local/bin/ring0_core
 
-# Verify provenance
- gpg --verify Master_Ring0.md.sig Master_Ring0.md
+# 3. Run pipeline (Rust core + airgap + parallel)
+./grinder_pipeline.sh --airgap --parallel /path/to/raw_data
 
-# Single file (backward)
-python3 ring0_extractor.py /path/to/file.pdf
-
-# Parallel dir extraction only
-python3 ring0_extractor.py /path/to/massive_raw_data
+# 4. Verify
+ls -l Master_Ring0.md Master_Ring0.md.sig
+gpg --verify Master_Ring0.md.sig Master_Ring0.md
 ```
 
-**End of Ring-0 Master Synthesizer Architectural Specification (v1.2)**
+**End of Ring-0 Master Synthesizer Architectural Specification (v1.3)**
