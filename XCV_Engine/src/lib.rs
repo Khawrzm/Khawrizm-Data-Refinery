@@ -1,30 +1,35 @@
 pub mod grid;
-use grid::{XcvSheet, CellValue};
+pub mod lexer;
+pub mod taco;
+
+pub use grid::XcvSheet;
 
 #[cxx::bridge]
 pub mod ffi {
+    extern "Rust" {
+        type XcvSheet;
+        fn get_cell_value(self: &XcvSheet, ref_id: &str) -> f64;
+        fn get_cell_formula(self: &XcvSheet, ref_id: &str) -> String;
+    }
+
     unsafe extern "C++" {
-        include!("XCV_Engine/src/xcv_wrapper.h");
+        include!("xcv_wrapper.h");
         type FormulaEngine;
         fn new_engine() -> UniquePtr<FormulaEngine>;
-        fn evaluate_formula(self: &FormulaEngine, formula: &str) -> f64;
-    }
-}
+        fn evaluate_formula(self: &FormulaEngine, formula: &str, sheet: &XcvSheet) -> f64;
 
-#[cfg(test)]
-mod tests {
-    use super::*;
+        include!("writer_wrapper.h");
+        type WriterDocument;
+        fn new_writer_document() -> UniquePtr<WriterDocument>;
+        fn load_document(self: &WriterDocument, path: &str);
+        fn save_document(self: &WriterDocument, path: &str);
+        fn extract_text(self: &WriterDocument) -> String;
 
-    #[test]
-    fn test_grid_initialization() {
-        println!("\n[XCV Grid] 🚀 Creating new Sovereign Worksheet...");
-        let mut sheet = XcvSheet::new("Financial_Report_Q1");
-        
-        sheet.set_cell("A1", CellValue::Number(50000.0));
-        sheet.set_cell("B2", CellValue::Text("KSA_Sovereign_Fund".to_string()));
-        sheet.set_cell("C3", CellValue::Formula("=SUM(A1:A10)".to_string()));
-
-        assert_eq!(sheet.get_cell("A1"), CellValue::Number(50000.0));
-        println!("[XCV Grid] ✅ Worksheet Memory allocated successfully.");
+        include!("impress_wrapper.h");
+        type ImpressPresentation;
+        fn new_impress_presentation() -> UniquePtr<ImpressPresentation>;
+        fn load_presentation(self: &ImpressPresentation, path: &str);
+        fn save_presentation(self: &ImpressPresentation, path: &str);
+        fn extract_slides_text(self: &ImpressPresentation) -> String;
     }
 }

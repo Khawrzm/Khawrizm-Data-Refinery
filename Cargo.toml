@@ -15,6 +15,10 @@ path = "ring0_monolith.rs"
 name = "pq_provenance"
 path = "pq_provenance.rs"
 
+[[bin]]
+name = "khawrizm_browser"
+path = "Khawrizm_Browser/src/main.rs"
+
 [dependencies]
 memmap2 = "0.9"
 rayon = "1.10"

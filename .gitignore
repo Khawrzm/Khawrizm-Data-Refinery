@@ -1,0 +1,5 @@
+target/
+XCV_Engine/target/
+*.bin
+*.pub
+*.db

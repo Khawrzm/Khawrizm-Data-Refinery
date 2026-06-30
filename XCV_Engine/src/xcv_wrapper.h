@@ -1,11 +1,12 @@
 #pragma once
-#include "rust/cxx.h"
 #include <memory>
 #include <string>
+#include "rust/cxx.h"
 
-// هذه الكلاس ستكون الواجهة التي تخاطب محرك LibreOffice لاحقاً
+struct XcvSheet;
+
 struct FormulaEngine {
-    double evaluate_formula(rust::Str formula) const;
+    double evaluate_formula(rust::Str formula, const XcvSheet& sheet) const;
 };
 
 std::unique_ptr<FormulaEngine> new_engine();
