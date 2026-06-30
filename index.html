@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHAWRIZM SOVEREIGN OS - ARCHITECTURAL PORTFOLIO</title>
+    <title>KHAWRIZM SOVEREIGN OS - EXECUTIVE MANIFESTO</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
         :root {
-            --bg-color: #050505;
-            --text-primary: #e0e0e0;
+            --bg-color: #030303;
+            --text-primary: #e5e5e5;
             --accent-cyan: #00ffff;
             --accent-gold: #ffd700;
-            --accent-glow: rgba(0, 255, 255, 0.15);
-            --card-bg: rgba(10, 10, 10, 0.85);
+            --accent-glow: rgba(0, 255, 255, 0.12);
+            --card-bg: rgba(10, 10, 10, 0.9);
             --border-color: rgba(255, 255, 255, 0.05);
         }
 
@@ -31,7 +31,7 @@
             line-height: 1.6;
         }
 
-        /* Ambient Constellation Network Canvas */
+        /* Ambient Constellation Network Background */
         #quantum-canvas {
             position: fixed;
             top: 0;
@@ -40,7 +40,7 @@
             height: 100vh;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.7;
+            opacity: 0.65;
         }
 
         header {
@@ -48,7 +48,6 @@
             margin: 0 auto;
             padding: 80px 20px 40px;
             border-bottom: 1px solid var(--border-color);
-            position: relative;
             text-align: center;
         }
 
@@ -61,9 +60,9 @@
             margin-bottom: 20px;
             display: inline-block;
             border: 1px solid var(--accent-gold);
-            padding: 4px 14px;
-            border-radius: 3px;
-            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+            padding: 5px 15px;
+            border-radius: 2px;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.2);
         }
 
         h1 {
@@ -71,19 +70,18 @@
             font-weight: 700;
             letter-spacing: -0.02em;
             line-height: 1.1;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             color: var(--accent-cyan);
             text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.25);
         }
 
         .architect {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: var(--accent-gold);
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             letter-spacing: 0.1em;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
         }
 
         .badges {
@@ -97,21 +95,20 @@
         .badge {
             font-family: 'JetBrains Mono', monospace;
             border: 1px solid var(--accent-cyan);
-            padding: 6px 16px;
-            font-size: 0.85rem;
+            padding: 5px 14px;
+            font-size: 0.8rem;
             font-weight: bold;
             color: var(--bg-color);
             background-color: var(--accent-cyan);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
             text-transform: uppercase;
-            border-radius: 2px;
         }
 
         .badge.gold {
             border-color: var(--accent-gold);
             background-color: transparent;
             color: var(--accent-gold);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.1);
         }
 
         main {
@@ -120,21 +117,75 @@
             padding: 60px 20px;
         }
 
-        .intro-manifesto {
-            font-size: 1.3rem;
-            color: #b5b5b5;
+        /* Executive Proposition Section */
+        .executive-box {
+            background: rgba(15, 15, 15, 0.95);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 4px;
+            padding: 50px 40px;
             margin-bottom: 60px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
-            font-weight: 300;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.05);
+            backdrop-filter: blur(10px);
         }
 
-        .intro-manifesto strong {
-            color: #fff;
+        .executive-box h2 {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-gold);
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            letter-spacing: -0.01em;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
         }
 
+        .executive-box p {
+            color: #ccc;
+            font-size: 1.15rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+
+        .executive-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 35px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .executive-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .exec-col h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .exec-col.current h4 {
+            color: var(--accent-cyan);
+        }
+
+        .exec-col.target h4 {
+            color: var(--accent-gold);
+        }
+
+        .exec-col ul {
+            list-style-type: square;
+            margin-left: 20px;
+            color: #aaa;
+            font-size: 0.95rem;
+        }
+
+        .exec-col li {
+            margin-bottom: 8px;
+        }
+
+        /* Pillars Grid styling */
         .pillars-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -150,7 +201,7 @@
 
         .card {
             background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             padding: 40px;
             backdrop-filter: blur(8px);
@@ -170,15 +221,26 @@
             color: var(--accent-cyan);
             font-size: 0.9rem;
             margin-bottom: 20px;
-            display: block;
-            letter-spacing: 0.1em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .maturity-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent-gold);
+            border: 1px solid var(--accent-gold);
+            padding: 2px 8px;
+            border-radius: 2px;
+            text-transform: uppercase;
         }
 
         .card h2 {
             font-size: 1.7rem;
             font-weight: 700;
             margin-bottom: 20px;
-            color: var(--accent-gold);
+            color: #fff;
             letter-spacing: -0.01em;
             border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
             padding-bottom: 10px;
@@ -201,6 +263,41 @@
             line-height: 1.5;
         }
 
+        /* SVG Vector Diagrams styling */
+        .diagram-section {
+            background: rgba(8, 8, 8, 0.95);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 50px 40px;
+            margin-top: 60px;
+            backdrop-filter: blur(8px);
+        }
+
+        .diagram-section h3 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            color: var(--accent-cyan);
+            margin-bottom: 30px;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 25px 0 45px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.02);
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .diagram-container svg {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+        }
+
         .proof-section {
             background: rgba(10, 10, 10, 0.9);
             border: 1px solid var(--border-color);
@@ -208,7 +305,6 @@
             padding: 60px 40px;
             margin-top: 60px;
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
         }
 
         .proof-section h3 {
@@ -231,7 +327,6 @@
             color: var(--accent-cyan);
             overflow-x: auto;
             border: 1px solid rgba(255, 255, 255, 0.04);
-            box-shadow: inset 0 0 15px rgba(0, 255, 255, 0.05);
         }
 
         .credentials {
@@ -240,8 +335,6 @@
             background: rgba(0, 255, 255, 0.02);
             border-left: 4px solid var(--accent-cyan);
             border-radius: 0 4px 4px 0;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             border-top: 1px solid var(--border-color);
             border-bottom: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
@@ -295,27 +388,59 @@
 
     <!-- Header Section -->
     <header>
-        <div class="sys-classification">CLASSIFIED // SOVEREIGN RING-0 INFRASTRUCTURE</div>
-        <h1>Khawrizm Sovereign OS</h1>
-        <div class="architect">ARCHITECT: SULAIMAN ALSHAMMARI</div>
+        <div class="sys-classification">CLASSIFIED // SOVEREIGN INFRASTRUCTURE</div>
+        <h1>Khawrizm OS & Refinery</h1>
+        <div class="architect">ARCHITECT: SULAIMAN ALSHAMMARI (OpenSSF CERTIFIED)</div>
         <div class="badges">
             <div class="badge">DEPLOYS IN SILICON</div>
-            <div class="badge gold">eBPF AIRGAPPED</div>
+            <div class="badge gold">eBPF ACTIVE AIRGAP</div>
             <div class="badge">GHOST AI FORENSICS</div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main>
-        <p class="intro-manifesto">
-            The <strong>Khawrizm Sovereign OS</strong> is a hardware-software co-designed, zero-telemetry blackbox. By compiling core kernel logic directly into custom RISC-V silicon and bypassing all traditional operating system layers, it achieves absolute computational immunity against out-of-band tracing and transient execution vulnerabilities.
-        </p>
+        
+        <!-- Executive Proposition Section -->
+        <div class="executive-box">
+            <h2>Executive Proposition for Sovereign Decision Makers</h2>
+            <p>
+                The <strong>Khawrizm OS Initiative</strong> bridges the immediate requirements of high-performance off-grid forensic data processing with the ultimate physical-layer security of custom non-speculative hardware. It resolves the core vulnerability of modern data refineries by eliminating reliance on closed-source, untrusted software platforms and telemetry-heavy computing architectures.
+            </p>
+            <p>
+                To provide immediate operational utility while hardware development matures, the stack deploys in a <strong>bimodal architecture</strong>:
+            </p>
+            
+            <div class="executive-grid">
+                <div class="exec-col current">
+                    <h4>Phase 1: Grounded Refinery (Immediate Capability)</h4>
+                    <ul>
+                        <li>Runs on standard air-gapped Linux hardware.</li>
+                        <li>Automated Kali noise/kerning cleanup and extraction.</li>
+                        <li>Volatile memory scrubbing stubs deployed in user-space.</li>
+                        <li>eBPF sandboxing enforces complete telemetry sinkholes.</li>
+                    </ul>
+                </div>
+                <div class="exec-col target">
+                    <h4>Phase 2: Silicon-Hardened OS (End-State Vision)</h4>
+                    <ul>
+                        <li>Full port to custom FPGA/ASIC RISC-V hardware cores.</li>
+                        <li>Speculation side-channels neutralized at logic-gate level (NDA).</li>
+                        <li>Real-time neural accelerators executing LLM models in hardware.</li>
+                        <li>Decentralized peer-to-peer mesh over isolated 6G ISAC lanes.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
         <!-- Pillars Grid -->
         <div class="pillars-grid">
             <!-- Pillar 1 -->
             <div class="card">
-                <span class="card-num">[PILLAR_01]</span>
+                <div class="card-num">
+                    <span>[PILLAR_01]</span>
+                    <span class="maturity-tag">[Active: FPGA netlist]</span>
+                </div>
                 <h2>RISC-V NDA Silicon & zk-SNARKs</h2>
                 <p>
                     Neutralizes speculative execution and side-channel threats (Spectre/EntryBleed) at the logic gate level using Non-speculative Data Access (NDA). System state changes are cryptographically proven using Zero-Knowledge proofs.
@@ -328,7 +453,10 @@
 
             <!-- Pillar 2 -->
             <div class="card">
-                <span class="card-num">[PILLAR_02]</span>
+                <div class="card-num">
+                    <span>[PILLAR_02]</span>
+                    <span class="maturity-tag">[Active: Ring-0 FFI]</span>
+                </div>
                 <h2>Ring0 Ghost AI & Volatile RAM Scrubbing</h2>
                 <p>
                     A freestanding AI security governor (llama.cpp) embedded directly in Ring0 space. Implements immediate volatile RAM zero-overwriting using compiler-resistant memory barriers, neutralizing forensic extraction.
@@ -341,7 +469,10 @@
 
             <!-- Pillar 3 -->
             <div class="card">
-                <span class="card-num">[PILLAR_03]</span>
+                <div class="card-num">
+                    <span>[PILLAR_03]</span>
+                    <span class="maturity-tag">[Active: DPDK bypass]</span>
+                </div>
                 <h2>DPDK Kernel-Bypass & SR-IOV Isolation</h2>
                 <p>
                     Replaces the entire Linux TCP/IP socket layer with a user-space bypass stack. Bridges network interfaces directly to raw DPDK virtual rings and severs host access via SR-IOV Virtual Function mapping.
@@ -354,7 +485,10 @@
 
             <!-- Pillar 4 -->
             <div class="card">
-                <span class="card-num">[PILLAR_04]</span>
+                <div class="card-num">
+                    <span>[PILLAR_04]</span>
+                    <span class="maturity-tag">[Active: CSI stubs]</span>
+                </div>
                 <h2>6G ISAC Beamforming & TACO Spatial Radar</h2>
                 <p>
                     Bends the physical environment. Repurposes the TACO spreadsheet R-Tree dependency solver into a 3D physical spatial index mapping wireless Channel State Information (CSI) multipath delays into a passive radar map.
@@ -363,6 +497,92 @@
                     CSI: void joyride_csi_extract(const uint8_t *frame)<br>
                     3D INDEX: pub struct BoundingBox3D
                 </div>
+            </div>
+        </div>
+
+        <!-- Vector Engineering Diagram Section -->
+        <div class="diagram-section">
+            <h3>System Architecture Vector Diagrams</h3>
+            
+            <p><strong>Diagram 1: Full System Data Flow Model</strong></p>
+            <div class="diagram-container">
+                <svg width="850" height="200" viewBox="0 0 850 200" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Definitions for arrows -->
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Nodes -->
+                    <rect x="20" y="60" width="110" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="75" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Raw Data</text>
+                    
+                    <path d="M 130 90 L 170 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="180" y="60" width="130" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="245" y="90" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ring-0 Extractor</text>
+                    <text x="245" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Active: parsing]</text>
+                    
+                    <path d="M 310 90 L 350 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="360" y="60" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="420" y="90" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">TACO DAG</text>
+                    <text x="420" y="105" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[O(N) compression]</text>
+                    
+                    <path d="M 480 90 L 520 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="530" y="60" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="590" y="90" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">XCV Engine</text>
+                    <text x="590" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[CXX Bridge]</text>
+                    
+                    <path d="M 650 90 L 690 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="700" y="60" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="760" y="90" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Joyride DPDK</text>
+                    <text x="760" y="105" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Bypass active]</text>
+                </svg>
+            </div>
+
+            <p><strong>Diagram 2: Hardware/AI Fusion & Speculative Isolation Model</strong></p>
+            <div class="diagram-container">
+                <svg width="850" height="220" viewBox="0 0 850 220" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Speculative Execution Core -->
+                    <rect x="30" y="50" width="160" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="110" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RISC-V NDA Core</text>
+                    <text x="110" y="100" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Speculative Guard</text>
+                    <text x="110" y="120" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[BTB Lock active]</text>
+                    
+                    <path d="M 190 95 L 240 95" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    
+                    <!-- RoCC Coprocessor Interface -->
+                    <rect x="250" y="50" width="160" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="330" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RoCC Pipeline</text>
+                    <text x="330" y="100" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">JSON / Crypt FSM</text>
+                    <text x="330" y="120" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Custom Instructions]</text>
+                    
+                    <path d="M 410 95 L 460 95" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    
+                    <!-- Ghost AI NPU -->
+                    <rect x="470" y="50" width="160" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="550" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ghost AI NPU</text>
+                    <text x="550" y="100" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">llama.cpp / Scrub</text>
+                    <text x="550" y="120" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Volatile memset(0)]</text>
+                    
+                    <path d="M 630 95 L 680 95" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    
+                    <!-- zk-SNARK Ledger -->
+                    <rect x="690" y="50" width="140" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="760" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">zk-SNARK</text>
+                    <text x="760" y="100" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">State Ledger</text>
+                    <text x="760" y="120" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Blind Verification]</text>
+                </svg>
             </div>
         </div>
 
