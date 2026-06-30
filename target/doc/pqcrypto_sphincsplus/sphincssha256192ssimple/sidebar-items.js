@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"fn":["detached_sign","keypair","open","public_key_bytes","secret_key_bytes","sign","signature_bytes","verify_detached_signature"],"struct":["DetachedSignature","PublicKey","SecretKey","SignedMessage"]};

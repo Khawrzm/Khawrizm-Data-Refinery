@@ -1,48 +1,58 @@
 #![allow(unused)]
-// ring0_monolith.rs v1.5
+// ring0_monolith.rs v2.0
 // Unified Ring-0 bare-metal daemon for KhawrizmOS
-// tokio + io_uring for async zero-copy I/O, rayon for extraction, direct FFI to llama.cpp for in-memory inference
-// Single process: no IPC, no sockets, no Python, no Bash
+// tokio + io_uring for async zero-copy I/O, rayon for extraction.
+// Zero-LLM Monolithic architecture: purely deterministic AST-based pipeline.
+// Single process: no IPC, no sockets, no Python, no Bash.
 
 use std::path::Path;
 use tokio::fs;
 use rayon::prelude::*;
-// use io_uring::IoUring; // for extreme async I/O on Linux 5.1+
-// FFI bridge
-mod llm_ffi_bridge;
-use llm_ffi_bridge::{load_gguf_model, generate_json_constrained};
 
-// Ported extraction logic (memmap + rayon accelerated)
-fn extract_file_zero_copy(path: &Path) -> String {
-    // memmap2 + previous PDF/Office logic + SIMD where cfg(target_arch)
-    // ...
-    "[extracted via monolith]".to_string()
-}
+#[path = "ring0_core.rs"]
+mod ring0_core;
 
 #[tokio::main(flavor = "multi_thread")]
 async fn main() {
     let args: Vec<String> = std::env::args().collect();
     let target = if args.len() > 1 { &args[1] } else { "./raw_data" };
-    println!("[Ring-0 v1.5 Monolith] Starting bare-metal singularity on {}", target);
+    println!("[Ring-0 v2.0 Monolith] Starting deterministic bare-metal singularity on {}", target);
 
-    // io_uring powered recursive walk (simplified async)
-    // In full: use tokio-uring or io-uring crate for dir + file read without syscall overhead
-    let files: Vec<_> = /* async walk with io_uring */ vec![target.to_string()];
+    // Recursively walk directory and find files
+    let mut files = Vec::new();
+    if let Ok(entries) = std::fs::read_dir(target) {
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_file() {
+                files.push(path.to_string_lossy().to_string());
+            }
+        }
+    }
 
-    // Parallel SIMD extraction
-    let extracted: Vec<String> = files.par_iter().map(|f| extract_file_zero_copy(Path::new(f))).collect();
+    if files.is_empty() {
+        println!("[Ring-0 v2.0] No files found in {}", target);
+        return;
+    }
 
-    // In-memory FFI inference (no TCP, no ureq)
-    let model = load_gguf_model("/models/llama-3-8b-q4.gguf"); // GGUF loaded into process memory
-    let mut master_md = String::from("# Ring-0 v1.5 Monolith Corpus\n\n");
-    for chunk in extracted {
-        // Grammar-constrained JSON generation at token level
-        if let Ok(json_str) = generate_json_constrained(&model, &chunk, "JSON_SCHEMA_FOR_STRUCTURED_MD") {
-            master_md.push_str(&json_str);
-            master_md.push_str("\n---\n");
+    // Parallel extraction and deterministic formatting using ring0_core AST-based parsing
+    let results: Vec<(String, String)> = files.par_iter().map(|f| {
+        let path = Path::new(f);
+        let text = ring0_core::process_file(path);
+        (path.file_name().unwrap_or_default().to_string_lossy().to_string(), text)
+    }).collect();
+
+    // Build Master Markdown
+    let mut master_md = String::from("# Ring-0 v2.0 Monolith Corpus\n\n");
+    master_md.push_str(&format!("**Source Directory:** {} | **Deterministic Build**\n\n---\n\n", target));
+
+    for (name, content) in results {
+        if !content.trim().is_empty() {
+            master_md.push_str(&format!("## File: {}\n\n", name));
+            master_md.push_str(&content);
+            master_md.push_str("\n\n---\n\n");
         }
     }
 
     tokio::fs::write("Master_Ring0.md", master_md).await.unwrap();
-    println!("[Ring-0 v1.5] Monolith complete. Master_Ring0.md written. Zero sockets. Zero IPC.");
+    println!("[Ring-0 v2.0] Monolith complete. Master_Ring0.md written. Zero sockets. Zero LLM hallucinations.");
 }
