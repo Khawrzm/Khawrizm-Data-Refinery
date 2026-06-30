@@ -61,18 +61,76 @@ fn extract_plain_mmap(path: &Path) -> String {
 fn extract_pdf_mmap(path: &Path) -> String {
     let data = if let Ok(mmap) = read_mmap(path) { mmap.to_vec() } else { std::fs::read(path).unwrap_or_default() };
     let mut text_parts = Vec::new();
-    let stream_re = Regex::new(r"(?s)stream\r?\n(.*?)\r?\nendstream").unwrap();
-    for cap in stream_re.captures_iter(&String::from_utf8_lossy(&data)) {
-        if let Some(s) = cap.get(1) {
-            let mut decoder = ZlibDecoder::new(s.as_str().as_bytes());
+    
+    // Scan manually for streams
+    let mut search_idx = 0;
+    while let Some(idx) = data[search_idx..].windows(6).position(|w| w == b"stream") {
+        let abs_stream_idx = search_idx + idx;
+        search_idx = abs_stream_idx + 6;
+        
+        // Determine the start of the stream data
+        let mut start_offset = 6;
+        if abs_stream_idx + start_offset < data.len() && data[abs_stream_idx + start_offset] == b'\r' {
+            start_offset += 1;
+        }
+        if abs_stream_idx + start_offset < data.len() && data[abs_stream_idx + start_offset] == b'\n' {
+            start_offset += 1;
+        }
+        let stream_start = abs_stream_idx + start_offset;
+        
+        // Find the matching endstream
+        if let Some(end_offset) = data[stream_start..].windows(9).position(|w| w == b"endstream") {
+            let abs_end_idx = stream_start + end_offset;
+            
+            // Extract the stream content slice
+            let mut stream_content = &data[stream_start..abs_end_idx];
+            
+            // Trim trailing \r or \n from stream content
+            while !stream_content.is_empty() && (stream_content[stream_content.len() - 1] == b'\n' || stream_content[stream_content.len() - 1] == b'\r') {
+                stream_content = &stream_content[..stream_content.len() - 1];
+            }
+            
+            // Decompress
+            let mut decoder = ZlibDecoder::new(stream_content);
             let mut dec = Vec::new();
             if decoder.read_to_end(&mut dec).is_ok() {
                 let ds = String::from_utf8_lossy(&dec);
+                
+                // TJ array matching
+                let tj_array_re = Regex::new(r"\[([^\]]*)\]\s*TJ").unwrap();
+                let inner_re = Regex::new(r"\(([^)]*)\)").unwrap();
+                for cap_arr in tj_array_re.captures_iter(&ds) {
+                    if let Some(arr) = cap_arr.get(1) {
+                        for cap_inner in inner_re.captures_iter(arr.as_str()) {
+                            if let Some(t) = cap_inner.get(1) {
+                                text_parts.push(t.as_str().to_string());
+                            }
+                        }
+                    }
+                }
+                
+                // Tj matching
                 let tj_re = Regex::new(r"\(([^)]*)\)\s*Tj").unwrap();
-                for c in tj_re.captures_iter(&ds) { if let Some(t) = c.get(1) { text_parts.push(t.as_str().to_string()); } }
+                for c in tj_re.captures_iter(&ds) {
+                    if let Some(t) = c.get(1) {
+                        text_parts.push(t.as_str().to_string());
+                    }
+                }
             }
         }
     }
+    
+    // Global fallback if no text extracted from streams
+    if text_parts.is_empty() {
+        let raw_str = String::from_utf8_lossy(&data);
+        let tj_re = Regex::new(r"\(([^)]{3,})\)\s*Tj").unwrap();
+        for c in tj_re.captures_iter(&raw_str) {
+            if let Some(t) = c.get(1) {
+                text_parts.push(t.as_str().to_string());
+            }
+        }
+    }
+    
     text_parts.join(" ")
 }
 
