@@ -1,84 +1,465 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHAWRIZM SOVEREIGN OS</title>
+    <title>KHAWRIZM SOVEREIGN OS - BILINGUAL EXECUTIVE PORTFOLIO</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        vantablack: '#030303',
+                        cyanglow: '#00ffff',
+                        goldglow: '#ffd700',
+                        amberglow: '#ff8c00',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body { background-color: #050505; color: #e0e0e0; font-family: 'Courier New', Courier, monospace; overflow-x: hidden; }
-        #quantum-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; opacity: 0.8; }
-        .cyan-glow { color: #00ffff; text-shadow: 0 0 10px rgba(0, 255, 255, 0.5); }
-        .gold-glow { color: #ffd700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
-        .card { background: rgba(10, 10, 10, 0.8); border: 1px solid #222; backdrop-filter: blur(5px); transition: all 0.3s ease; }
-        .card:hover { border-color: #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.1); }
-        .badge-active { border: 1px solid #00ffff; background-color: #00ffff; color: #050505; font-weight: bold; padding: 2px 8px; font-size: 0.8rem; }
-        .badge-pending { border: 1px solid #ffd700; color: #ffd700; font-weight: bold; padding: 2px 8px; font-size: 0.8rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        #quantum-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.65;
+        }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-vantablack text-gray-300 overflow-x-hidden line-height-relaxed">
+
+    <!-- Ambient Constellation Canvas -->
     <canvas id="quantum-canvas"></canvas>
-    <div class="relative z-10 max-w-6xl mx-auto px-6 py-16">
-        <header class="text-center border-b border-[#00ffff] pb-10 mb-12">
-            <h1 class="text-5xl font-bold cyan-glow tracking-widest uppercase mb-4" dir="ltr">Khawrizm Sovereign OS</h1>
-            <div class="text-xl gold-glow mb-6">المعمارية السيادية: سليمان الشمري</div>
-            <div class="max-w-3xl mx-auto text-gray-300 text-lg leading-relaxed mb-6">
-                <strong>الملخص التنفيذي لمتخذي القرار (السيادة الرقمية):</strong><br>
-                نظام "الخوارزمي" هو صندوق أسود سيادي مصمم ليعمل كـ "رادار فيزيائي" و"عقل أمني" متكامل، متجاوزاً نواة لينكس (Kernel Bypass) ومدمجاً بعتاد سيليكوني مخصص (RISC-V NDA) لمنع ثغرات التنفيذ الاستباقي. يضمن النظام مكافحة التحقيقات الجنائية عبر مسح الذاكرة الفوري (RAM Scrubbing)، مما يوفر بيئة استخباراتية وبياناتية غير قابلة للاختراق.
-            </div>
-            <div class="flex justify-center gap-4" dir="ltr">
-                <span class="badge-active">DEPLOYS IN SILICON</span>
-                <span class="badge-pending">eBPF AIRGAPPED</span>
-                <span class="badge-active">GHOST AI FORENSICS</span>
-            </div>
-        </header>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8" dir="ltr">
-            <div class="card p-8">
-                <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-4">
-                    <h3 class="text-2xl gold-glow">01. RISC-V NDA Silicon</h3>
-                    <span class="badge-pending">FPGA SYNTHESIS PENDING</span>
-                </div>
-                <p class="text-gray-400 mb-4">Neutralizes speculative execution side-channel threats (Spectre/EntryBleed) at the logic gate level using Non-speculative Data Access (NDA). Proven via Zero-Knowledge proofs (zk-SNARKs).</p>
-            </div>
-            <div class="card p-8">
-                <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-4">
-                    <h3 class="text-2xl gold-glow">02. Ring0 Ghost AI</h3>
-                    <span class="badge-active">RING-0 TESTED</span>
-                </div>
-                <p class="text-gray-400 mb-4">Freestanding AI security governor (llama.cpp) in Ring0. Implements volatile RAM zero-overwriting using compiler-resistant memory barriers to defeat forensic extraction.</p>
-            </div>
-            <div class="card p-8">
-                <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-4">
-                    <h3 class="text-2xl gold-glow">03. DPDK Kernel-Bypass</h3>
-                    <span class="badge-active">ACTIVE: KALI PIPELINE</span>
-                </div>
-                <p class="text-gray-400 mb-4">Replaces Linux TCP/IP with Joyride bypass stack. Bridges network interfaces directly to raw DPDK virtual rings and severs host access via SR-IOV Virtual Functions.</p>
-            </div>
-            <div class="card p-8">
-                <div class="flex justify-between items-center border-b border-gray-700 pb-2 mb-4">
-                    <h3 class="text-2xl gold-glow">04. 6G ISAC & TACO Radar</h3>
-                    <span class="badge-pending">EXPERIMENTAL</span>
-                </div>
-                <p class="text-gray-400 mb-4">Repurposes TACO R-Tree index into a 3D spatial radar mapping wireless CSI multipath delays. Executes Adaptive Beamforming to neutralize unauthorized devices.</p>
-            </div>
+    <!-- Header Section -->
+    <header class="max-w-6xl mx-auto px-6 pt-20 pb-10 border-b border-white/5 text-center relative">
+        <div class="font-mono text-goldglow text-xs tracking-[0.25em] uppercase mb-5 border border-goldglow/30 px-3.5 py-1.5 inline-block rounded-sm shadow-[0_0_8px_rgba(255,215,0,0.15)]">
+            CLASSIFIED // SOVEREIGN INFRASTRUCTURE
         </div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-cyanglow uppercase drop-shadow-[0_0_15px_rgba(0,255,255,0.25)]">
+            Khawrizm OS & Refinery
+        </h1>
+        <div class="font-mono text-sm text-goldglow tracking-wider mb-6">
+            ARCHITECT: SULAIMAN ALSHAMMARI (OpenSSF CERTIFIED)
+        </div>
+        <div class="flex justify-center flex-wrap gap-4 mt-6">
+            <span class="font-mono border border-cyanglow px-3.5 py-1 text-xs font-bold text-vantablack bg-cyanglow shadow-[0_0_15px_rgba(0,255,255,0.2)] uppercase">
+                DEPLOYS IN SILICON
+            </span>
+            <span class="font-mono border border-goldglow/50 px-3.5 py-1 text-xs font-bold text-goldglow shadow-[0_0_10px_rgba(255,215,0,0.1)] uppercase">
+                eBPF ACTIVE AIRGAP
+            </span>
+            <span class="font-mono border border-cyanglow px-3.5 py-1 text-xs font-bold text-vantablack bg-cyanglow shadow-[0_0_15px_rgba(0,255,255,0.2)] uppercase">
+                GHOST AI FORENSICS
+            </span>
+        </div>
+    </header>
 
-        <div class="mt-16 p-8 bg-[#00ffff] bg-opacity-5 border-r-4 border-[#00ffff]">
-            <h3 class="text-xl cyan-glow mb-4">الاعتمادات الموثقة تشفيرياً</h3>
-            <ul class="text-sm text-gray-300 space-y-2" dir="ltr">
-                <li><span class="gold-glow">[VERIFIED]</span> The Linux Foundation / OpenSSF: Developing Secure Software (LFD121)</li>
-                <li><span class="gold-glow">[VERIFIED]</span> The Linux Foundation: Security for Software Development Managers (LFD125)</li>
-                <li><span class="gold-glow">[VERIFIED]</span> The Linux Foundation: Linux Kernel Development (LFD103_JP)</li>
+    <main class="max-w-6xl mx-auto px-6 py-16">
+
+        <!-- Arabic Executive Summary -->
+        <section class="bg-black/90 border border-goldglow/25 rounded p-10 mb-12 shadow-[0_0_30px_rgba(255,215,0,0.03)] backdrop-blur-md" dir="rtl">
+            <h2 class="font-mono text-goldglow text-2xl font-bold mb-6 tracking-wide drop-shadow-[0_0_8px_rgba(255,215,0,0.2)]">
+                الملخص التنفيذي السيادي (Sovereign Executive Proposition)
+            </h2>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                يمثل مشروع <strong>نظام تشغيل الخوارزمي (Khawrizm OS)</strong> حلقة وصل متكاملة تجمع بين متطلبات معالجة البيانات الجنائية الرقمية الفورية المعزولة تماماً، ورؤية السيادة التقنية المطلقة على مستوى هندسة السيليكون والعتاد (Hardware). يحل هذا النظام الثغرة الأمنية الجوهرية في محطات معالجة وتصفية البيانات التقليدية عبر التخلص التام من الاعتماد على الأجهزة والأنظمة التجارية غير الموثوقة أو المليئة بثغرات التتبع والاتصال الخارجي.
+            </p>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                ولغرض توفير حماية وسيادة تقنية فورية خلال فترة نضج واختبار العتاد، تم تصميم وتطوير النظام بـ <strong>بنية تشغيل ثنائية الطور (Bimodal Architecture)</strong>:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-white/5 pt-8">
+                <div class="border-r border-white/5 pr-4">
+                    <h4 class="font-mono text-cyanglow text-lg font-bold mb-4 uppercase">الطور الأول: مصفاة البيانات المعزولة (القدرة التشغيلية الحالية)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                        <li>العمل بكفاءة تامة على خوادم محلية معزولة شبكياً بشكل فيزيائي تام (Air-Gapped).</li>
+                        <li>التطهير التلقائي لمدخلات البيانات الجنائية والتخلص من عينات البيانات غير المرغوبة.</li>
+                        <li>إجراء التطهير الفوري والآمن للذاكرة العشوائية عتادياً وبرمجياً (Volatile Memory Scrubbing).</li>
+                        <li>توظيف جدران الحماية eBPF لمنع تسرب حزم البيانات بشكل مطلق.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono text-goldglow text-lg font-bold mb-4 uppercase">الطور الثاني: سيادة العتاد الكاملة (الرؤية المستقبلية)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                        <li>النقل الشامل للنظام ليعمل على شرائح معالجات مخصصة (RISC-V ASIC/FPGA).</li>
+                        <li>إجراء الحماية عتادياً ومنع تسريب البيانات من نواة المعالج (Spectre/EntryBleed).</li>
+                        <li>تنفيذ عمليات استنباط نماذج الذكاء الاصطناعي عتادياً بالكامل داخل مسرع الشبكة العصبية (RoCC NPU).</li>
+                        <li>نقل البيانات المشفرة والآمنة بين العقد السيادية لاسلكياً عبر قنوات 6G ISAC معزولة تماماً.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- English Executive Summary -->
+        <section class="bg-black/95 border border-white/5 rounded p-10 mb-12 backdrop-blur-md">
+            <h2 class="font-mono text-cyanglow text-2xl font-bold mb-6 tracking-wide drop-shadow-[0_0_8px_rgba(0,255,255,0.2)]">
+                Executive Proposition for Sovereign Decision Makers
+            </h2>
+            <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+                The <strong>Khawrizm OS Initiative</strong> bridges the immediate requirements of high-performance off-grid forensic data processing with the ultimate physical-layer security of custom non-speculative hardware. It resolves the core vulnerability of modern data refineries by eliminating reliance on closed-source, untrusted software platforms and telemetry-heavy computing architectures.
+            </p>
+            <p>
+                To provide immediate operational utility while hardware development matures, the stack deploys in a <strong>bimodal architecture</strong>:
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 border-t border-white/5 pt-8">
+                <div>
+                    <h4 class="font-mono text-cyanglow text-base font-bold mb-4 uppercase">Phase 1: Grounded Refinery (Immediate Capability)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                        <li>Runs on standard air-gapped Linux hardware.</li>
+                        <li>Automated Kali noise/kerning cleanup and extraction.</li>
+                        <li>Volatile memory scrubbing stubs deployed in user-space.</li>
+                        <li>eBPF sandboxing enforces complete telemetry sinkholes.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-mono text-goldglow text-base font-bold mb-4 uppercase">Phase 2: Silicon-Hardened OS (End-State Vision)</h4>
+                    <ul class="list-disc list-inside text-gray-400 text-sm space-y-2">
+                        <li>Full port to custom FPGA/ASIC RISC-V hardware cores.</li>
+                        <li>Speculation side-channels neutralized at logic-gate level (NDA).</li>
+                        <li>Real-time neural accelerators executing LLM models in hardware.</li>
+                        <li>Decentralized peer-to-peer mesh over isolated 6G ISAC lanes.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pillars Grid -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+            <!-- Pillar 1 -->
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
+                    <span>[PILLAR_01]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: FPGA NETLIST]</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">RISC-V NDA Silicon & zk-SNARKs</h2>
+                <p class="text-gray-400 text-sm mb-6">
+                    Neutralizes speculative execution and side-channel threats (Spectre/EntryBleed) at the logic gate level using Non-speculative Data Access (NDA). System state changes are cryptographically proven using Zero-Knowledge proofs.
+                </p>
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
+                    CHISEL: class BranchTargetBufferBarrier extends Module<br>
+                    FFI: fn zk_snark_prove_provenance(graph: &ProvenanceGraph)
+                </div>
+            </div>
+
+            <!-- Pillar 2 -->
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
+                    <span>[PILLAR_02]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: RING-0 FFI]</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">Ring0 Ghost AI & Volatile RAM Scrubbing</h2>
+                <p class="text-gray-400 text-sm mb-6">
+                    A freestanding AI security governor (llama.cpp) embedded directly in Ring0 space. Implements immediate volatile RAM zero-overwriting using compiler-resistant memory barriers, neutralizing forensic extraction.
+                </p>
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
+                    C++: void secure_scrub_memory(void *buf, size_t len)<br>
+                    RUST: pub fn run_ai_governance(data: &[u8])
+                </div>
+            </div>
+
+            <!-- Pillar 3 -->
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
+                    <span>[PILLAR_03]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: DPDK BYPASS]</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">DPDK Kernel-Bypass & SR-IOV Isolation</h2>
+                <p class="text-gray-400 text-sm mb-6">
+                    Replaces the entire Linux TCP/IP socket layer with a user-space bypass stack. Bridges network interfaces directly to raw DPDK virtual rings and severs host access via SR-IOV Virtual Function mapping.
+                </p>
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
+                    DPDK: void joyride_sriov_init(int vf_index)<br>
+                    BYPASS: Intercepts socket() connect() send() recv()
+                </div>
+            </div>
+
+            <!-- Pillar 4 -->
+            <div class="bg-black/95 border border-white/5 rounded p-10 hover:border-cyanglow/30 hover:shadow-[0_0_25px_rgba(0,255,255,0.12)] transition-all duration-300">
+                <div class="font-mono text-cyanglow text-sm mb-4 flex justify-between items-center">
+                    <span>[PILLAR_04]</span>
+                    <span class="text-xs text-goldglow border border-goldglow px-2 py-0.5 rounded">[ACTIVE: CSI STUBS]</span>
+                </div>
+                <h2 class="text-xl font-bold text-white mb-4 border-b border-white/5 pb-2.5">6G ISAC Beamforming & TACO Spatial Radar</h2>
+                <p class="text-gray-400 text-sm mb-6">
+                    Bends the physical environment. Repurposes the TACO spreadsheet R-Tree dependency solver into a 3D physical spatial index mapping wireless Channel State Information (CSI) multipath delays into a passive radar map.
+                </p>
+                <div class="font-mono bg-black/60 rounded p-4 border-l-2 border-cyanglow text-xs text-gray-300">
+                    CSI: void joyride_csi_extract(const uint8_t *frame)<br>
+                    3D INDEX: pub struct BoundingBox3D
+                </div>
+            </div>
+        </section>
+
+        <!-- Vector Engineering Diagram Section -->
+        <section class="bg-black/95 border border-white/5 rounded p-10 mb-12">
+            <h3 class="font-mono text-cyanglow text-xl font-bold mb-8 uppercase tracking-wide">
+                System Architecture Vector Diagrams
+            </h3>
+            
+            <p class="font-bold mb-2">Diagram 1: Full System Data Flow Model</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Nodes -->
+                    <rect x="20" y="50" width="110" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="75" y="85" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Raw Data</text>
+                    
+                    <path d="M 130 80 L 170 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="180" y="50" width="130" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="245" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ring-0 Extractor</text>
+                    <text x="245" y="95" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Active: parsing]</text>
+                    
+                    <path d="M 310 80 L 350 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="360" y="50" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="420" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">TACO DAG</text>
+                    <text x="420" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[O(N) compression]</text>
+                    
+                    <path d="M 480 80 L 520 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="530" y="50" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="590" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">XCV Engine</text>
+                    <text x="590" y="95" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[CXX Bridge]</text>
+                    
+                    <path d="M 650 80 L 690 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    
+                    <rect x="700" y="50" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="760" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Joyride DPDK</text>
+                    <text x="760" y="95" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Bypass active]</text>
+                </svg>
+            </div>
+
+            <p class="font-bold mb-2">Diagram 2: Hardware/AI Fusion & Speculative Isolation Model</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
+                    <defs>
+                        <marker id="arrow2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Speculative Execution Core -->
+                    <rect x="30" y="40" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="110" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RISC-V NDA Core</text>
+                    <text x="110" y="90" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Speculative Guard</text>
+                    <text x="110" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[BTB Lock active]</text>
+                    
+                    <path d="M 190 80 L 240 80" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    
+                    <!-- RoCC Coprocessor Interface -->
+                    <rect x="250" y="40" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="330" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RoCC Pipeline</text>
+                    <text x="330" y="90" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">JSON / Crypt FSM</text>
+                    <text x="330" y="105" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Custom Instructions]</text>
+                    
+                    <path d="M 410 80 L 460 80" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    
+                    <!-- Ghost AI NPU -->
+                    <rect x="470" y="40" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="550" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ghost AI NPU</text>
+                    <text x="550" y="90" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">llama.cpp / Scrub</text>
+                    <text x="550" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Volatile memset(0)]</text>
+                    
+                    <path d="M 630 80 L 680 80" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    
+                    <!-- zk-SNARK Ledger -->
+                    <rect x="690" y="40" width="140" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="760" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">zk-SNARK</text>
+                    <text x="760" y="90" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">State Ledger</text>
+                    <text x="760" y="105" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Blind Verification]</text>
+                </svg>
+            </div>
+
+            <p class="font-bold mb-2">Diagram 3: Post-Quantum Provenance Ledger Chain</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="150" viewBox="0 0 850 150" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
+                    <defs>
+                        <marker id="arrow3" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Block N -->
+                    <rect x="50" y="30" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="130" y="60" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Sovereign Block N</text>
+                    <text x="130" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hash: d7a8f...9e2</text>
+                    <text x="130" y="95" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Dilithium2 Signed]</text>
+                    
+                    <path d="M 210 70 L 310 70" stroke="#00ffff" stroke-dasharray="4,4" stroke-width="1.5" marker-end="url(#arrow3)" />
+                    <text x="260" y="60" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Parent Hash</text>
+                    
+                    <!-- Block N+1 -->
+                    <rect x="320" y="30" width="180" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="410" y="60" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Sovereign Block N+1</text>
+                    <text x="410" y="80" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hash: 4a9d1...bc6</text>
+                    <text x="410" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Verified Link]</text>
+                    
+                    <path d="M 500 70 L 600 70" stroke="#00ffff" stroke-dasharray="4,4" stroke-width="1.5" marker-end="url(#arrow3)" />
+                    <text x="550" y="60" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Parent Hash</text>
+                    
+                    <!-- Block N+2 -->
+                    <rect x="610" y="30" width="180" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="700" y="60" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Sovereign Block N+2</text>
+                    <text x="700" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hash: 8fc1a...ffd</text>
+                    <text x="700" y="95" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Pending Audit]</text>
+                </svg>
+            </div>
+
+            <p class="font-bold mb-2">Diagram 4: Ghost AI Ring-0 Memory Scrubbing Pipeline</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded mb-8">
+                <svg width="850" height="220" viewBox="0 0 850 220" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
+                    <defs>
+                        <linearGradient id="scrubGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ff3333" stop-opacity="0.8" />
+                            <stop offset="50%" stop-color="#ff8c00" stop-opacity="0.8" />
+                            <stop offset="100%" stop-color="#030303" stop-opacity="1" />
+                        </linearGradient>
+                        <marker id="arrow4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Step 1: Raw Input Buffer (Red - Dirty) -->
+                    <rect x="20" y="40" width="160" height="100" rx="4" fill="rgba(255, 51, 51, 0.1)" stroke="#ff3333" stroke-width="1.5" />
+                    <text x="100" y="70" fill="#ff3333" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">Dirty Volatile RAM</text>
+                    <text x="100" y="95" fill="#ffffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Prompt Trace: 0xFD492...</text>
+                    <text x="100" y="115" fill="#ff3333" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Carvable Trace]</text>
+                    
+                    <path d="M 180 90 L 250 90" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow4)" />
+                    <text x="215" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Inference Complete</text>
+                    
+                    <!-- Step 2: Volatile Scrubbing Trigger -->
+                    <rect x="270" y="40" width="220" height="100" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="380" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Volatile Scrubbing FSM</text>
+                    <text x="380" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">secure_scrub_memory()</text>
+                    <text x="380" y="115" fill="#ff8c00" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Compiler Barrier Enabled]</text>
+                    
+                    <path d="M 490 90 L 560 90" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow4)" />
+                    <text x="525" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Overwriting</text>
+                    
+                    <!-- Step 3: Cleared memory (Vantablack) -->
+                    <rect x="580" y="40" width="230" height="100" rx="4" fill="#030303" stroke="#00ffff" stroke-width="1.5" />
+                    <!-- Visual representation of memory blocks turning Vantablack -->
+                    <rect x="590" y="50" width="210" height="20" fill="url(#scrubGradient)" />
+                    <text x="695" y="90" fill="#00ffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Scrubbed RAM</text>
+                    <text x="695" y="110" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">0x0000000000000000</text>
+                    <text x="695" y="125" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Forensic Proof Complete]</text>
+                </svg>
+            </div>
+
+            <p class="font-bold mb-2">Diagram 5: TACO Spatial Indexing & 6G ISAC Radar Mapping</p>
+            <div class="w-full overflow-x-auto bg-black/40 border border-white/5 p-5 rounded">
+                <svg width="850" height="260" viewBox="0 0 850 260" xmlns="http://www.w3.org/2000/svg" class="mx-auto block max-w-full">
+                    <defs>
+                        <marker id="arrow5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Left: RF multipath CSI delays -->
+                    <rect x="20" y="40" width="200" height="180" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="120" y="65" fill="#ffd700" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">6G ISAC RF Sensing</text>
+                    <path d="M 40 120 Q 60 80, 80 120 T 120 120 T 160 120 T 200 120" fill="none" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="120" y="170" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">CSI Subcarrier Delays</text>
+                    <text x="120" y="195" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Multipath Doppler Shift</text>
+                    
+                    <path d="M 220 130 L 290 130" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow5)" />
+                    <text x="255" y="115" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Map to R-Tree</text>
+                    
+                    <!-- Middle: TACO R-Tree 3D Coordinates -->
+                    <rect x="310" y="40" width="220" height="180" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="420" y="65" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">TACO R-Tree 3D Engine</text>
+                    <!-- R-Tree nodes visualization -->
+                    <rect x="330" y="90" width="180" height="80" fill="none" stroke="rgba(255,215,0,0.4)" stroke-width="1" />
+                    <rect x="350" y="110" width="60" height="40" fill="none" stroke="#00ffff" stroke-width="1" />
+                    <rect x="430" y="100" width="60" height="45" fill="none" stroke="#ff8c00" stroke-width="1" />
+                    <text x="420" y="200" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">BoundingBox3D Nodes</text>
+                    
+                    <path d="M 530 130 L 600 130" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow5)" />
+                    <text x="565" y="115" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Plot Coordinates</text>
+                    
+                    <!-- Right: Passive 3D radar map -->
+                    <rect x="620" y="40" width="200" height="180" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="720" y="65" fill="#ffd700" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">3D Spatial Radar Map</text>
+                    <!-- 3D coordinate target representation -->
+                    <circle cx="720" cy="130" r="25" fill="none" stroke="#ff8c00" stroke-width="1.5" stroke-dasharray="3,3" />
+                    <circle cx="720" cy="130" r="5" fill="#ff3333" />
+                    <text x="720" y="185" fill="#ffffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Target: [x, y, z]</text>
+                    <text x="720" y="205" fill="#ff8c00" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Millimeter Resolution</text>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Credentials section -->
+        <div class="credentials bg-cyanglow/[0.02] border-l-4 border-cyanglow rounded-r border-y border-r border-white/5 p-10 mt-12">
+            <h3 class="font-mono text-cyanglow text-lg font-bold mb-6 tracking-wide">
+                CRYPTOGRAPHICALLY VERIFIED CREDENTIALS
+            </h3>
+            <ul class="font-mono text-sm text-gray-300 space-y-3">
+                <li class="before:content-['[VERIFIED]_'] before:text-goldglow before:font-bold">
+                    The Linux Foundation / OpenSSF: Developing Secure Software (LFD121)
+                </li>
+                <li class="before:content-['[VERIFIED]_'] before:text-goldglow before:font-bold">
+                    The Linux Foundation: Security for Software Development Managers (LFD125)
+                </li>
+                <li class="before:content-['[VERIFIED]_'] before:text-goldglow before:font-bold">
+                    The Linux Foundation: Linux Kernel Development (LFD103_JP)
+                </li>
             </ul>
         </div>
-    </div>
 
+        <!-- Proof Section -->
+        <div class="proof-section bg-black/90 border border-white/5 rounded p-10 mt-12">
+            <h3 class="font-mono text-goldglow text-lg font-bold mb-6 tracking-wide">
+                [MATHEMATICAL_PROOF_OF_INVULNERABILITY]
+            </h3>
+            <p class="text-sm mb-4">
+                The physical security posture is proven through strict non-speculative data propagation tags. A speculative instruction $i \in I_{spec}$ along a branch cannot leak information via caching state if tags are held until architectural commitment:
+            </p>
+            <div class="font-mono bg-black p-6 rounded text-sm text-cyanglow overflow-x-auto border border-white/5 mb-6">
+                &forall; i &isin; I_spec,  Wakeup(i) &rArr; ( &forall; p &isin; Producers(i),  Status(p) = Committed )
+            </div>
+            <p class="text-sm mb-4">
+                The cryptographic ledger integrity is validated under blind verification. For any state transition, the verifier validates the R1CS constraints of the zk-SNARK proof without exposure to the raw event log bytes:
+            </p>
+            <div class="font-mono bg-black p-6 rounded text-sm text-cyanglow overflow-x-auto border border-white/5">
+                P( Retrieve(P_s, W) | T_carve > T_inf ) = 0
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 py-12 text-center font-mono text-xs text-gray-500 max-w-6xl mx-auto">
+        KHAWRIZM DATA REFINERY // SIGNED DETACHED: <strong class="text-goldglow">Dilithium2 + SPHINCS+</strong> // SECURE DEPLOYMENT
+    </footer>
+
+    <!-- Constellation Background Script -->
     <script>
         const canvas = document.getElementById('quantum-canvas');
         const ctx = canvas.getContext('2d');
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+
         const particles = [];
         const particleCount = 120;
 
@@ -91,12 +472,15 @@
                 this.size = Math.random() * 2;
                 this.isGold = Math.random() > 0.8;
             }
+
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
+
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
+
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -104,16 +488,23 @@
                 ctx.fill();
             }
         }
-        for (let i = 0; i < particleCount; i++) { particles.push(new Particle()); }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
+                
                 for (let j = i; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
+                    
                     if (distance < 100) {
                         ctx.beginPath();
                         ctx.strokeStyle = particles[i].isGold || particles[j].isGold 
@@ -128,10 +519,12 @@
             }
             requestAnimationFrame(animate);
         }
+
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+
         animate();
     </script>
 </body>
