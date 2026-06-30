@@ -2,72 +2,79 @@
 
 **Document Classification:** RING-0 SOVEREIGN INFRASTRUCTURE
 **Component Designation:** Ring-0 Master Synthesizer
-**Version:** 1.1
+**Version:** 1.2
 **Date:** 2026-06-30
 **Architect:** Sulaiman Alshammari / KHAWRIZM Forensic Labs
 
 ## 1. PURPOSE
 
-This repository implements the zero-telemetry, air-gapped "Sovereign Data Grinder" pipeline. It ingests arbitrary file formats (PDF, DOCX, XLSX, PPTX, HTML, logs, code, junk) and produces a single, highly structured Markdown artifact (`Master_Ring0.md`) optimized for NotebookLM ingestion and local LLM synthesis. v1.1 introduces fully local inference path and cryptographic data provenance.
+This repository implements the zero-telemetry, air-gapped "Sovereign Data Grinder" pipeline v1.2 with kernel-enforced network isolation (eBPF/XDP), task-parallel extraction on ARM64/RISC-V, flock-protected deterministic appends, and cryptographic provenance. It ingests arbitrary file formats and produces `Master_Ring0.md` optimized for NotebookLM under absolute sovereignty constraints.
 
 ## 2. ARCHITECTURAL COMPONENTS
 
-### 2.1 ring0_extractor.py
-- **Context:** Ring-0 offline extraction engine
-- **Dependencies:** Python 3 standard library exclusively (zipfile, xml.etree.ElementTree, zlib, re, html.parser)
-- **Capabilities:**
-  - PDF: zlib stream decompression + regex Tj/TJ text extraction with fallback
-  - Office (DOCX/XLSX/PPTX): native zip+xml parsing of document.xml, sharedStrings, slides
-  - HTML: html.parser data extraction
-  - Generic: direct text read for logs/code/junk
-  - Post-process: aggressive regex removal of terminal/PowerShell/Kali prompts, ANSI codes, timestamps; PDF kerning repair (spaced letters); Arabic RTL run reversal correction
+### 2.1 ring0_extractor.py (v1.2)
+- **Context:** Ring-0 offline extraction engine with parallel acceleration
+- **Dependencies:** Python 3 standard library (zipfile, xml.etree.ElementTree, zlib, re, html.parser, concurrent.futures)
+- **Capabilities:** PDF/DOCX/XLSX/PPTX/HTML/plain + cleaning/kerning/Arabic fixes
+- **v1.2:** process_directory_parallel() using ProcessPoolExecutor(max_workers) for concurrent multi-file extraction on high-core ARM64/RISC-V. Backward compatible single-file mode.
 
 ### 2.2 api_sanitizer.py
-- **Context:** Deterministic LLM structuring bridge (external)
-- **Dependencies:** Python stdlib (json, urllib.request) + GROK_API_KEY / XAI_API_KEY / OPENAI_API_KEY
-- **Mechanism:** Text is chunked (~3200 chars). Each chunk submitted to xAI Grok endpoint under system prompt enforcing EXACT JSON schema. response_format=json_object + temperature=0.0. Non-conforming or conversational responses are dropped. Valid sections are aggregated into hierarchical Markdown.
-- **Schema Enforced:** section_title, executive_summary, entities[], structured_markdown (NotebookLM-optimized), tags[]
+- External API path (see v1.0)
 
-### 2.3 airgapped_sanitizer.py (NEW v1.1)
-- **Context:** Local-first, zero-external-network alternative
-- **Dependencies:** Python stdlib (json, urllib.request) + running local inference engine (Ollama recommended on 127.0.0.1:11434)
-- **Mechanism:** Identical chunking and JSON schema enforcement as api_sanitizer.py. Routes to http://127.0.0.1:11434/api/chat (or OLLAMA_HOST) with "format": "json" and temperature=0.0. No bytes leave the host. Model selectable via OLLAMA_MODEL env var (default: llama3).
-- **Schema Enforced:** Identical strict contract (section_title, executive_summary, entities[], structured_markdown, tags[])
+### 2.3 airgapped_sanitizer.py
+- Local Ollama path (see v1.1)
 
-### 2.4 grinder_pipeline.sh
-- **Context:** Kali Linux recursive orchestration harness
-- **Operation:** find(1) recursion over target directory → ring0_extractor.py → pipe → selected sanitizer (stdin) → append to Master_Ring0.md
-- **v1.1 Controls:**
-  - `--airgap` | `--local` flag: dynamically selects airgapped_sanitizer.py (local Ollama) instead of external API
-  - Automatic GPG detached signature generation on completion (`Master_Ring0.md.sig`)
-- **Controls:** set -euo pipefail, stderr progress, automatic chmod, size reporting, exclusion of scripts and output file
+### 2.4 grinder_pipeline.sh (v1.2)
+- **Context:** Kali Linux orchestration with concurrency control
+- **v1.2 Flags:**
+  - `--airgap` : route to local inference
+  - `--parallel` : enable xargs -P + ProcessPoolExtractor path + flock serialized append to Master_Ring0.md
+- **Locking:** flock(1) on file descriptor during >> to guarantee race-free, chronologically consistent Markdown blocks under parallel workloads
+- **Provenance:** Automatic GPG .sig on completion
+
+### 2.5 ebpf_airgap_enforcer.c (NEW v1.2)
+- **Context:** Ring-0 kernel network enforcer
+- **Language:** C99/C11 BPF
+- **Mechanism:** XDP hook. Parses eth/ip. Drops any packet whose IPv4 dst != 127.0.0.1 (INADDR_LOOPBACK). Provides mathematically enforced kill-switch against any telemetry or external API calls, even if user-space sanitizer misconfigures. Respects pipeline UID/PID context via bpf_get_current_* helpers (extensible).
+- **Compilation:** clang -target bpf -O2 -c -o ebpf_airgap_enforcer.o ebpf_airgap_enforcer.c
+- **Load (example):** ip link set dev lo xdpgeneric obj ebpf_airgap_enforcer.o sec xdp
+- **Effect:** Only localhost (Ollama) traffic passes; all other outbound IP is dropped at earliest kernel stage.
 
 ## 3. OPERATIONAL MANDATE
 
-Extraction phase: fully offline, zero external dependencies or telemetry.
-Sanitization phase (airgap mode): machine-enforced JSON contract via local inference engine; zero network egress.
-Result: Master_Ring0.md is the canonical, chunkable, NotebookLM-ready sovereign knowledge base. Cryptographic signature provides tamper-evident provenance aligned with OpenSSF secure supply chain practices.
+Extraction: offline + optional ProcessPool parallel.
+Sanitization: JSON-schema enforced (local or remote).
+Network: XDP kernel drop non-localhost.
+Append: flock serialized for determinism.
+Output: Master_Ring0.md + .sig for verifiable sovereign corpus.
 
 ## 4. SECURITY POSTURE
-- Zero telemetry in extraction
-- Air-gapped core processing (optional full-local inference path)
-- Strict JSON schema boundary at LLM interface (local or remote)
-- Full local sovereignty; no raw data leaves controlled environment
-- Cryptographic signing of final artifact for verifiable chain of custody
+- Zero telemetry (user-space + kernel XDP)
+- Air-gapped extraction + local inference
+- Kernel-enforced network boundary (eBPF/XDP)
+- Strict JSON determinism
+- flock + GPG supply chain integrity
+- Full local sovereignty on ARM64/RISC-V
 
-## 5. EXECUTION PARAMETERS (v1.1)
+## 5. EXECUTION PARAMETERS (v1.2)
 
 ```bash
-# Standard (external API path)
-./grinder_pipeline.sh /path/to/raw_data
+# Airgapped + parallel on multi-core
+./grinder_pipeline.sh --airgap --parallel /path/to/massive_raw_data
 
-# Fully air-gapped local inference (requires Ollama running)
-export OLLAMA_MODEL=llama3.1
-export OLLAMA_HOST=127.0.0.1:11434
-./grinder_pipeline.sh --airgap /path/to/raw_data
+# Compile & load eBPF airgap enforcer (requires root)
+clang -target bpf -O2 -c -o ebpf_airgap_enforcer.o ebpf_airgap_enforcer.c
+ip link set dev lo xdpgeneric obj ebpf_airgap_enforcer.o sec xdp
+# Verify: bpftool prog list | grep airgap
 
-# Verify cryptographic provenance after run
+# Verify provenance
  gpg --verify Master_Ring0.md.sig Master_Ring0.md
+
+# Single file (backward)
+python3 ring0_extractor.py /path/to/file.pdf
+
+# Parallel dir extraction only
+python3 ring0_extractor.py /path/to/massive_raw_data
 ```
 
-**End of Ring-0 Master Synthesizer Architectural Specification (v1.1)**
+**End of Ring-0 Master Synthesizer Architectural Specification (v1.2)**
