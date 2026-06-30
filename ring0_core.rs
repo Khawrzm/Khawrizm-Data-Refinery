@@ -12,6 +12,22 @@ use zip::ZipArchive;
 use quick_xml::events::Event;
 use quick_xml::Reader;
 
+extern "C" {
+    pub fn secure_scrub_memory(buf: *mut u8, len: usize);
+    pub fn ring0_ai_analyze_packet(packet_data: *const u8, len: usize, output_buf: *mut u8, max_out: usize) -> i32;
+}
+
+pub fn run_ai_governance(data: &[u8]) {
+    let mut out_buf = vec![0u8; 128];
+    unsafe {
+        let is_anomaly = ring0_ai_analyze_packet(data.as_ptr(), data.len(), out_buf.as_mut_ptr(), out_buf.len());
+        if is_anomaly != 0 {
+            eprintln!("[AI GOVERNOR ALERT] Network anomaly or telemetry signature detected!");
+        }
+        secure_scrub_memory(out_buf.as_mut_ptr(), out_buf.len());
+    }
+}
+
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
@@ -504,4 +520,21 @@ fn process_directory_parallel(dir: &Path) {
         format!("=== BEGIN {}\n{}\n=== END ===\n", f.display(), t)
     }).collect();
     for r in results { print!("{}", r); }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_ai_governance_secure() {
+        let secure_packet = b"Standard secure packet payload.";
+        run_ai_governance(secure_packet);
+    }
+
+    #[test]
+    fn test_ai_governance_anomaly() {
+        let anomaly_packet = b"Some bytes \x12\x34 and telemetry stuff.";
+        run_ai_governance(anomaly_packet);
+    }
 }
