@@ -11,6 +11,42 @@ pub struct CellCoord {
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CellCoord3D {
+    pub x: i32,
+    pub y: i32,
+    pub z: i32,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct BoundingBox3D {
+    pub min_x: i32,
+    pub min_y: i32,
+    pub min_z: i32,
+    pub max_x: i32,
+    pub max_y: i32,
+    pub max_z: i32,
+}
+
+impl BoundingBox3D {
+    pub fn new(c1: CellCoord3D, c2: CellCoord3D) -> Self {
+        BoundingBox3D {
+            min_x: std::cmp::min(c1.x, c2.x),
+            min_y: std::cmp::min(c1.y, c2.y),
+            min_z: std::cmp::min(c1.z, c2.z),
+            max_x: std::cmp::max(c1.x, c2.x),
+            max_y: std::cmp::max(c1.y, c2.y),
+            max_z: std::cmp::max(c1.z, c2.z),
+        }
+    }
+
+    pub fn contains(&self, p: CellCoord3D) -> bool {
+        p.x >= self.min_x && p.x <= self.max_x &&
+        p.y >= self.min_y && p.y <= self.max_y &&
+        p.z >= self.min_z && p.z <= self.max_z
+    }
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct BoundingBox2D {
     pub min_col: u32,
     pub min_row: u32,
@@ -165,5 +201,18 @@ mod tests {
 
         let query_res = index.query(CellCoord { col: 0, row: 3 });
         assert_eq!(query_res, vec![CellCoord { col: 1, row: 3 }]);
+    }
+
+    #[test]
+    fn test_3d_spatial_bounds() {
+        let c1 = CellCoord3D { x: 0, y: 0, z: 0 };
+        let c2 = CellCoord3D { x: 10, y: 10, z: 10 };
+        let bbox = BoundingBox3D::new(c1, c2);
+        
+        let p_inside = CellCoord3D { x: 5, y: 5, z: 5 };
+        let p_outside = CellCoord3D { x: 15, y: 5, z: 5 };
+        
+        assert!(bbox.contains(p_inside));
+        assert!(!bbox.contains(p_outside));
     }
 }

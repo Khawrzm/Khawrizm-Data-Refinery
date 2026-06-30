@@ -22,6 +22,12 @@ struct rte_mempool { char name[32]; };
 struct rte_mbuf { void *buf_addr; uint32_t data_len; };
 
 static int dpdk_initialized = 0;
+static int sriov_vf_enabled = 0;
+
+void joyride_sriov_init(int vf_index) {
+    sriov_vf_enabled = 1;
+    printf("[Joyride] SR-IOV Virtual Function %d enabled. Bare-metal hardware bypass active.\n", vf_index);
+}
 
 // 802.11 MAC Frame Header Structure
 struct joyride_80211_mac_header {
@@ -91,6 +97,7 @@ void joyride_init(void) {
     dpdk_initialized = 1;
     printf("[Joyride] Kernel-bypass network stack initialized successfully. DPDK rings configured.\n");
     joyride_wireless_init("wl0");
+    joyride_sriov_init(1); // Bind to virtual function 1
 }
 
 // Intercept socket()

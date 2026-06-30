@@ -140,6 +140,21 @@ class HardwareAutoencoder extends Module {
   io.anomalyAlert := loss > io.threshold
 }
 
+// 9. ISAC Beamforming CoProcessor (Phase Shift calculations)
+class BeamformingCoProcessor extends Module {
+  val io = IO(new Bundle {
+    val angleOfArrival = Input(UInt(8.W)) // 0 to 255 representing angle
+    val antIndex = Input(UInt(4.W))
+    val phaseShift = Output(UInt(16.W))
+  })
+  
+  // Calculate phase shift: phi = (2 * pi * d / lambda) * sin(theta)
+  // Simplified fixed-point approximation: phi = antIndex * angleOfArrival
+  val calcReg = RegInit(0.U(16.W))
+  calcReg := io.antIndex * io.angleOfArrival
+  io.phaseShift := calcReg
+}
+
 // Register the coprocessor in the tile
 class WithKhawrizmRoCC extends Config((site, here, up) => {
   case BuildRoCC => up(BuildRoCC) :+ { (p: Parameters) =>
