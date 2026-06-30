@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-Ring-0 Extractor v1.0
+Ring-0 Extractor v1.2
 Zero-dependency stdlib text extraction engine for sovereign data refinery.
 Handles PDF (zlib+re), DOCX/XLSX/PPTX (zip+xml), HTML, logs, code, junk.
 Aggressive cleaning: terminal noise, PDF kerning, Arabic RTL reversal.
+v1.2: Added ProcessPoolExecutor parallel directory processing for ARM64/RISC-V multi-core throughput.
 """
 
 import sys
@@ -13,31 +14,25 @@ import zipfile
 import xml.etree.ElementTree as ET
 import zlib
 import html.parser
+import concurrent.futures
 
 def clean_terminal_noise(text):
-    # Remove ANSI escape sequences
     text = re.sub(r'\x1B(?:[@-Z\\-_]|\[[0-?]*[ -/]*[@-~])', '', text)
-    # Remove Kali/PowerShell/cmd prompts and common CLI noise
     text = re.sub(r'(?m)^\s*(?:kali㎟\S*\s*|PS .*?>\s*|C:\\.*?>|\$\s*|#\s*)\s*', '', text)
-    # Remove bracketed timestamps
     text = re.sub(r'\[\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}(:\d{2})?\]', '', text)
-    # Normalize whitespace
     text = re.sub(r'[ \t]+', ' ', text)
     text = re.sub(r'\n{3,}', '\n\n', text)
     return text.strip()
 
 def fix_pdf_kerning(text):
-    # Repair broken kerning: "c o m p l e x i t y" -> "complexity"
     for _ in range(6):
         text = re.sub(r'(\b[A-Za-z0-9])\s+([A-Za-z0-9]\b)', r'\1\2', text)
-    # Handle longer spaced sequences
     def join_spaced_letters(m):
         return ''.join(m.group(0).split())
     text = re.sub(r'(?<=[\W^])([A-Za-z0-9]\s+){2,}[A-Za-z0-9](?=[\W$])', join_spaced_letters, text)
     return text
 
 def fix_arabic_reversal(text):
-    # Reverse Arabic unicode runs to correct PDF RTL extraction artifacts
     arabic_pattern = re.compile(r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]+')
     def reverse_arabic(m):
         return m.group(0)[::-1]
@@ -69,7 +64,6 @@ def extract_text_from_pdf(filepath):
                 except:
                     pass
         if not text_parts:
-            # Crude fallback
             all_tj = re.findall(rb'\(([^)]{3,})\)\s*Tj', data)
             for t in all_tj:
                 text_parts.append(t.decode('latin-1', errors='ignore'))
@@ -195,13 +189,42 @@ def process_file(filepath):
     text = fix_arabic_reversal(text)
     return text
 
+def process_directory_parallel(directory):
+    import glob
+    files = []
+    patterns = ('**/*.pdf', '**/*.docx', '**/*.doc', '**/*.xlsx', '**/*.xls', '**/*.pptx',
+                '**/*.html', '**/*.htm', '**/*.txt', '**/*.log', '**/*.md', '**/*.py',
+                '**/*.sh', '**/*.json', '**/*.xml', '**/*.csv')
+    for pat in patterns:
+        files.extend(glob.glob(os.path.join(directory, pat), recursive=True))
+    files = sorted(set(f for f in files if os.path.isfile(f)))
+    print(f"[Ring-0] Parallel extraction of {len(files)} files using ProcessPoolExecutor on {os.cpu_count()} cores", file=sys.stderr)
+    results = []
+    with concurrent.futures.ProcessPoolExecutor(max_workers=min(32, os.cpu_count() or 4)) as executor:
+        future_to_file = {executor.submit(process_file, f): f for f in files}
+        for future in concurrent.futures.as_completed(future_to_file):
+            f = future_to_file[future]
+            try:
+                res = future.result()
+                results.append((f, res))
+            except Exception as exc:
+                results.append((f, f"[PARALLEL ERROR: {exc}]"))
+    results.sort(key=lambda x: x[0])
+    for f, res in results:
+        print(f"=== BEGIN {f} ===")
+        print(res)
+        print("=== END ===\n")
+
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python3 ring0_extractor.py <filepath>")
+        print("Usage: python3 ring0_extractor.py <filepath|directory>")
         sys.exit(1)
-    filepath = sys.argv[1]
-    if not os.path.isfile(filepath):
-        print(f"Error: {filepath} not found")
+    path = sys.argv[1]
+    if os.path.isdir(path):
+        process_directory_parallel(path)
+    elif os.path.isfile(path):
+        result = process_file(path)
+        print(result)
+    else:
+        print(f"Error: {path} not found")
         sys.exit(1)
-    result = process_file(filepath)
-    print(result)
