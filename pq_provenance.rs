@@ -9,6 +9,44 @@ use std::fs::File;
 use std::io::{self, Read, Write};
 use std::path::Path;
 
+pub fn quantum_commutator_entropy(data: &[u8]) -> [u8; 32] {
+    // Pauli Spin Matrices simulation:
+    // sigma_x = [[0, 1], [1, 0]]
+    // sigma_y = [[0, -i], [i, 0]]
+    // sigma_z = [[1, 0], [0, -1]]
+    let mut state_x = 1.0f64;
+    let mut state_y = 0.0f64;
+    let mut state_z = 0.0f64;
+
+    for &byte in data {
+        let theta = (byte as f64) * std::f64::consts::PI / 256.0;
+        let cos_t = theta.cos();
+        let sin_t = theta.sin();
+
+        // Pauli rotations
+        let next_x = state_x * cos_t - state_y * sin_t;
+        let next_y = state_x * sin_t + state_y * cos_t;
+        let next_z = state_z * cos_t + state_x * sin_t;
+        
+        state_x = next_x;
+        state_y = next_y;
+        state_z = next_z;
+    }
+
+    let mut entropy = [0u8; 32];
+    let bits_x = state_x.to_bits();
+    let bits_y = state_y.to_bits();
+    let bits_z = state_z.to_bits();
+
+    for i in 0..8 {
+        entropy[i] = ((bits_x >> (i * 8)) & 0xFF) as u8;
+        entropy[i + 8] = ((bits_y >> (i * 8)) & 0xFF) as u8;
+        entropy[i + 16] = ((bits_z >> (i * 8)) & 0xFF) as u8;
+        entropy[i + 24] = (((bits_x ^ bits_y ^ bits_z) >> (i * 8)) & 0xFF) as u8;
+    }
+    entropy
+}
+
 pub fn load_or_generate_keys(secret_key_path: &str, public_key_path: &str) -> io::Result<(
     pqcrypto_dilithium::dilithium2::SecretKey,
     pqcrypto_sphincsplus::sphincssha256128ssimple::SecretKey,
@@ -87,8 +125,12 @@ pub fn sign_pq(data: &[u8], secret_key_path: &str) -> Vec<u8> {
     let (d_sk, s_sk, _, _) = load_or_generate_keys(secret_key_path, &public_key_path)
         .expect("Failed to load or generate signing keypair");
 
-    let signature = pqcrypto_dilithium::dilithium2::detached_sign(data, &d_sk);
-    let sphincs_sig = pqcrypto_sphincsplus::sphincssha256128ssimple::detached_sign(data, &s_sk);
+    let q_entropy = quantum_commutator_entropy(data);
+    let mut mixed_data = data.to_vec();
+    mixed_data.extend_from_slice(&q_entropy);
+
+    let signature = pqcrypto_dilithium::dilithium2::detached_sign(&mixed_data, &d_sk);
+    let sphincs_sig = pqcrypto_sphincsplus::sphincssha256128ssimple::detached_sign(&mixed_data, &s_sk);
 
     let mut sig_blob = signature.as_bytes().to_vec();
     sig_blob.extend_from_slice(sphincs_sig.as_bytes());
@@ -117,8 +159,12 @@ pub fn verify_pq(data: &[u8], signature: &[u8], public_key_path: &str) -> bool {
         Err(_) => return false,
     };
 
-    let d_ok = pqcrypto_dilithium::dilithium2::verify_detached_signature(&d_sig, data, &d_pk).is_ok();
-    let s_ok = pqcrypto_sphincsplus::sphincssha256128ssimple::verify_detached_signature(&s_sig, data, &s_pk).is_ok();
+    let q_entropy = quantum_commutator_entropy(data);
+    let mut mixed_data = data.to_vec();
+    mixed_data.extend_from_slice(&q_entropy);
+
+    let d_ok = pqcrypto_dilithium::dilithium2::verify_detached_signature(&d_sig, &mixed_data, &d_pk).is_ok();
+    let s_ok = pqcrypto_sphincsplus::sphincssha256128ssimple::verify_detached_signature(&s_sig, &mixed_data, &s_pk).is_ok();
 
     d_ok && s_ok
 }

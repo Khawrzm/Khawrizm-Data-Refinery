@@ -134,9 +134,36 @@ mod tests {
         let source_box = BoundingBox2D::new(CellCoord { col: 0, row: 0 }, CellCoord { col: 0, row: 10 });
         let target_box = BoundingBox2D::new(CellCoord { col: 1, row: 0 }, CellCoord { col: 1, row: 10 });
         
-        // RR: Slide next to each other
+        // 1. RR: Slide next to each other
         let rr_dep = TacoDependency::new(source_box, target_box, LocalityType::RR { col_offset: 1, row_offset: 0 });
         let res = rr_dep.resolve_dependencies(CellCoord { col: 0, row: 5 }).unwrap();
         assert_eq!(res, vec![CellCoord { col: 1, row: 5 }]);
+
+        // 2. RF: Fixed target cell
+        let rf_dep = TacoDependency::new(source_box, target_box, LocalityType::RF { target_col: 9, target_row: 9 });
+        let res_rf = rf_dep.resolve_dependencies(CellCoord { col: 0, row: 2 }).unwrap();
+        assert_eq!(res_rf, vec![CellCoord { col: 9, row: 9 }]);
+
+        // 3. FF: Fixed range
+        let ff_dep = TacoDependency::new(source_box, target_box, LocalityType::FF);
+        let res_ff = ff_dep.resolve_dependencies(CellCoord { col: 0, row: 0 }).unwrap();
+        assert_eq!(res_ff.len(), 11); // Target range size is 11 cells
+
+        // 4. FR: Fixed source, target slides
+        let fr_dep = TacoDependency::new(source_box, target_box, LocalityType::FR { source_col: 0, source_row: 0 });
+        let res_fr = fr_dep.resolve_dependencies(CellCoord { col: 0, row: 0 }).unwrap();
+        assert_eq!(res_fr.len(), 11);
+    }
+
+    #[test]
+    fn test_spatial_index() {
+        let mut index = TacoSpatialIndex::default();
+        let source_box = BoundingBox2D::new(CellCoord { col: 0, row: 0 }, CellCoord { col: 0, row: 5 });
+        let target_box = BoundingBox2D::new(CellCoord { col: 1, row: 0 }, CellCoord { col: 1, row: 5 });
+        let dep = TacoDependency::new(source_box, target_box, LocalityType::RR { col_offset: 1, row_offset: 0 });
+        index.insert(dep);
+
+        let query_res = index.query(CellCoord { col: 0, row: 3 });
+        assert_eq!(query_res, vec![CellCoord { col: 1, row: 3 }]);
     }
 }

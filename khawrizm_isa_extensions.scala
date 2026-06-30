@@ -81,6 +81,21 @@ class KhawrizmRoCC(opcodes: OpcodeSet)(implicit p: Parameters) extends LazyRoCC(
   }
 }
 
+// 5. Speculative Execution Defense (BTB Barrier)
+// Intercepts speculative branches and blocks transient side-channels
+class BranchTargetBufferBarrier extends Module {
+  val io = IO(new Bundle {
+    val branchTaken = Input(Bool())
+    val specLevel   = Input(UInt(4.W))
+    val btbFlush    = Output(Bool())
+    val btbLock     = Output(Bool())
+  })
+
+  // Lock BTB updates and trigger flush if speculative execution is active
+  io.btbLock  := io.specLevel > 0.U
+  io.btbFlush := io.branchTaken && (io.specLevel > 0.U)
+}
+
 // Register the coprocessor in the tile
 class WithKhawrizmRoCC extends Config((site, here, up) => {
   case BuildRoCC => up(BuildRoCC) :+ { (p: Parameters) =>
