@@ -11,6 +11,8 @@ use flate2::read::ZlibDecoder;
 use zip::ZipArchive;
 use quick_xml::events::Event;
 use quick_xml::Reader;
+use pqcrypto_traits::sign::DetachedSignature as _;
+use pqcrypto_dilithium::dilithium2::{PublicKey, SecretKey, detached_sign, verify_detached_signature, DetachedSignature};
 
 extern "C" {
     pub fn secure_scrub_memory(buf: *mut u8, len: usize);
@@ -26,6 +28,36 @@ pub fn run_ai_governance(data: &[u8]) {
         }
         secure_scrub_memory(out_buf.as_mut_ptr(), out_buf.len());
     }
+}
+
+pub fn sign_threat_indicator(data: &[u8], sk: &SecretKey) -> Vec<u8> {
+    detached_sign(data, sk).as_bytes().to_vec()
+}
+
+pub fn verify_threat_indicator(data: &[u8], signature_bytes: &[u8], pk: &PublicKey) -> bool {
+    if let Ok(sig) = DetachedSignature::from_bytes(signature_bytes) {
+        verify_detached_signature(&sig, data, pk).is_ok()
+    } else {
+        false
+    }
+}
+
+pub fn ring0_analyze_dpdk_stream(packet: &[u8]) -> Option<Vec<u8>> {
+    let mut out_buf = vec![0u8; 128];
+    unsafe {
+        let is_anomaly = ring0_ai_analyze_packet(packet.as_ptr(), packet.len(), out_buf.as_mut_ptr(), out_buf.len());
+        secure_scrub_memory(out_buf.as_mut_ptr(), out_buf.len());
+        
+        if is_anomaly != 0 {
+            // Return eBPF drop filter rule bytes: r0 = 0 (BPF_DROP), exit
+            let ebpf_bytecode = vec![
+                0xB7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+                0x95, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+            ];
+            return Some(ebpf_bytecode);
+        }
+    }
+    None
 }
 
 fn main() {
@@ -536,5 +568,26 @@ mod tests {
     fn test_ai_governance_anomaly() {
         let anomaly_packet = b"Some bytes \x12\x34 and telemetry stuff.";
         run_ai_governance(anomaly_packet);
+    }
+
+    #[test]
+    fn test_dpdk_stream_analysis() {
+        let secure_packet = b"Standard secure packet.";
+        assert!(ring0_analyze_dpdk_stream(secure_packet).is_none());
+
+        let anomaly_packet = b"Anomaly \x12\x34 packet.";
+        let filter = ring0_analyze_dpdk_stream(anomaly_packet);
+        assert!(filter.is_some());
+        let bytecode = filter.unwrap();
+        assert_eq!(bytecode[0], 0xB7); // BPF_MOV64_IMM opcode
+    }
+
+    #[test]
+    fn test_p2p_threat_signing() {
+        let (pk, sk) = pqcrypto_dilithium::dilithium2::keypair();
+        let threat_ioc = b"INTEL_AMT_OUTBOUND_TELEMETRY_DETECTION_IP:192.168.1.100";
+        let sig = sign_threat_indicator(threat_ioc, &sk);
+        assert!(!sig.is_empty());
+        assert!(verify_threat_indicator(threat_ioc, &sig, &pk));
     }
 }
