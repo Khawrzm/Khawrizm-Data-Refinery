@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KHAWRIZM SOVEREIGN OS - EXECUTIVE MANIFESTO</title>
+    <title>KHAWRIZM SOVEREIGN OS - OMEGA ARCHITECTURAL PORTFOLIO</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700&family=JetBrains+Mono:wght@400;700&display=swap');
 
@@ -12,8 +12,9 @@
             --text-primary: #e5e5e5;
             --accent-cyan: #00ffff;
             --accent-gold: #ffd700;
+            --accent-amber: #ff8c00;
             --accent-glow: rgba(0, 255, 255, 0.12);
-            --card-bg: rgba(10, 10, 10, 0.9);
+            --card-bg: rgba(10, 10, 10, 0.95);
             --border-color: rgba(255, 255, 255, 0.05);
         }
 
@@ -31,7 +32,7 @@
             line-height: 1.6;
         }
 
-        /* Ambient Constellation Network Background */
+        /* Ambient Constellation Network Canvas */
         #quantum-canvas {
             position: fixed;
             top: 0;
@@ -46,7 +47,7 @@
         header {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px 40px;
+            padding: 85px 20px 45px;
             border-bottom: 1px solid var(--border-color);
             text-align: center;
         }
@@ -82,6 +83,7 @@
             color: var(--accent-gold);
             margin-bottom: 25px;
             letter-spacing: 0.1em;
+            text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
         }
 
         .badges {
@@ -506,8 +508,7 @@
             
             <p><strong>Diagram 1: Full System Data Flow Model</strong></p>
             <div class="diagram-container">
-                <svg width="850" height="200" viewBox="0 0 850 200" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Definitions for arrows -->
+                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
@@ -515,38 +516,38 @@
                     </defs>
                     
                     <!-- Nodes -->
-                    <rect x="20" y="60" width="110" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
-                    <text x="75" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Raw Data</text>
+                    <rect x="20" y="50" width="110" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="75" y="85" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Raw Data</text>
                     
-                    <path d="M 130 90 L 170 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    <path d="M 130 80 L 170 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
                     
-                    <rect x="180" y="60" width="130" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
-                    <text x="245" y="90" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ring-0 Extractor</text>
-                    <text x="245" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Active: parsing]</text>
+                    <rect x="180" y="50" width="130" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="245" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ring-0 Extractor</text>
+                    <text x="245" y="95" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Active: parsing]</text>
                     
-                    <path d="M 310 90 L 350 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    <path d="M 310 80 L 350 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
                     
-                    <rect x="360" y="60" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
-                    <text x="420" y="90" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">TACO DAG</text>
-                    <text x="420" y="105" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[O(N) compression]</text>
+                    <rect x="360" y="50" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="420" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">TACO DAG</text>
+                    <text x="420" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[O(N) compression]</text>
                     
-                    <path d="M 480 90 L 520 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    <path d="M 480 80 L 520 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
                     
-                    <rect x="530" y="60" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
-                    <text x="590" y="90" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">XCV Engine</text>
-                    <text x="590" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[CXX Bridge]</text>
+                    <rect x="530" y="50" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="590" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">XCV Engine</text>
+                    <text x="590" y="95" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[CXX Bridge]</text>
                     
-                    <path d="M 650 90 L 690 90" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
+                    <path d="M 650 80 L 690 80" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow)" />
                     
-                    <rect x="700" y="60" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
-                    <text x="760" y="90" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Joyride DPDK</text>
-                    <text x="760" y="105" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Bypass active]</text>
+                    <rect x="700" y="50" width="120" height="60" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="760" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Joyride DPDK</text>
+                    <text x="760" y="95" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">[Bypass active]</text>
                 </svg>
             </div>
 
             <p><strong>Diagram 2: Hardware/AI Fusion & Speculative Isolation Model</strong></p>
             <div class="diagram-container">
-                <svg width="850" height="220" viewBox="0 0 850 220" xmlns="http://www.w3.org/2000/svg">
+                <svg width="850" height="180" viewBox="0 0 850 180" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <marker id="arrow2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                             <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
@@ -554,34 +555,153 @@
                     </defs>
                     
                     <!-- Speculative Execution Core -->
-                    <rect x="30" y="50" width="160" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
-                    <text x="110" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RISC-V NDA Core</text>
-                    <text x="110" y="100" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Speculative Guard</text>
-                    <text x="110" y="120" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[BTB Lock active]</text>
+                    <rect x="30" y="40" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="110" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RISC-V NDA Core</text>
+                    <text x="110" y="90" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Speculative Guard</text>
+                    <text x="110" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[BTB Lock active]</text>
                     
-                    <path d="M 190 95 L 240 95" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    <path d="M 190 80 L 240 80" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
                     
                     <!-- RoCC Coprocessor Interface -->
-                    <rect x="250" y="50" width="160" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
-                    <text x="330" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RoCC Pipeline</text>
-                    <text x="330" y="100" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">JSON / Crypt FSM</text>
-                    <text x="330" y="120" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Custom Instructions]</text>
+                    <rect x="250" y="40" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="330" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">RoCC Pipeline</text>
+                    <text x="330" y="90" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">JSON / Crypt FSM</text>
+                    <text x="330" y="105" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Custom Instructions]</text>
                     
-                    <path d="M 410 95 L 460 95" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    <path d="M 410 80 L 460 80" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
                     
                     <!-- Ghost AI NPU -->
-                    <rect x="470" y="50" width="160" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
-                    <text x="550" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ghost AI NPU</text>
-                    <text x="550" y="100" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">llama.cpp / Scrub</text>
-                    <text x="550" y="120" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Volatile memset(0)]</text>
+                    <rect x="470" y="40" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="550" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Ghost AI NPU</text>
+                    <text x="550" y="90" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">llama.cpp / Scrub</text>
+                    <text x="550" y="105" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Volatile memset(0)]</text>
                     
-                    <path d="M 630 95 L 680 95" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
+                    <path d="M 630 80 L 680 80" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow2)" />
                     
                     <!-- zk-SNARK Ledger -->
-                    <rect x="690" y="50" width="140" height="90" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
-                    <text x="760" y="80" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">zk-SNARK</text>
-                    <text x="760" y="100" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">State Ledger</text>
-                    <text x="760" y="120" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Blind Verification]</text>
+                    <rect x="690" y="40" width="140" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="760" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">zk-SNARK</text>
+                    <text x="760" y="90" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">State Ledger</text>
+                    <text x="760" y="105" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Blind Verification]</text>
+                </svg>
+            </div>
+
+            <p><strong>Diagram 3: Post-Quantum Provenance Ledger Chain</strong></p>
+            <div class="diagram-container">
+                <svg width="850" height="150" viewBox="0 0 850 150" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow3" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Block N -->
+                    <rect x="50" y="30" width="160" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="130" y="60" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Sovereign Block N</text>
+                    <text x="130" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hash: d7a8f...9e2</text>
+                    <text x="130" y="95" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Dilithium2 Signed]</text>
+                    
+                    <path d="M 210 70 L 310 70" stroke="#00ffff" stroke-dasharray="4,4" stroke-width="1.5" marker-end="url(#arrow3)" />
+                    <text x="260" y="60" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Parent Hash</text>
+                    
+                    <!-- Block N+1 -->
+                    <rect x="320" y="30" width="180" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="410" y="60" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Sovereign Block N+1</text>
+                    <text x="410" y="80" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hash: 4a9d1...bc6</text>
+                    <text x="410" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Verified Link]</text>
+                    
+                    <path d="M 500 70 L 600 70" stroke="#00ffff" stroke-dasharray="4,4" stroke-width="1.5" marker-end="url(#arrow3)" />
+                    <text x="550" y="60" fill="#00ffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Parent Hash</text>
+                    
+                    <!-- Block N+2 -->
+                    <rect x="610" y="30" width="180" height="80" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="700" y="60" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Sovereign Block N+2</text>
+                    <text x="700" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Hash: 8fc1a...ffd</text>
+                    <text x="700" y="95" fill="#888888" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Pending Audit]</text>
+                </svg>
+            </div>
+
+            <p><strong>Diagram 4: Ghost AI Ring-0 Memory Scrubbing Pipeline</strong></p>
+            <div class="diagram-container">
+                <svg width="850" height="220" viewBox="0 0 850 220" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="scrubGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#ff3333" stop-opacity="0.8" />
+                            <stop offset="50%" stop-color="#ff8c00" stop-opacity="0.8" />
+                            <stop offset="100%" stop-color="#030303" stop-opacity="1" />
+                        </linearGradient>
+                        <marker id="arrow4" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#ffd700" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Step 1: Raw Input Buffer (Red - Dirty) -->
+                    <rect x="20" y="40" width="160" height="100" rx="4" fill="rgba(255, 51, 51, 0.1)" stroke="#ff3333" stroke-width="1.5" />
+                    <text x="100" y="70" fill="#ff3333" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">Dirty Volatile RAM</text>
+                    <text x="100" y="95" fill="#ffffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Prompt Trace: 0xFD492...</text>
+                    <text x="100" y="115" fill="#ff3333" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Carvable Trace]</text>
+                    
+                    <path d="M 180 90 L 250 90" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow4)" />
+                    <text x="215" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Inference Complete</text>
+                    
+                    <!-- Step 2: Volatile Scrubbing Trigger -->
+                    <rect x="270" y="40" width="220" height="100" rx="4" fill="rgba(15,15,15,0.9)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="380" y="70" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Volatile Scrubbing FSM</text>
+                    <text x="380" y="95" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">secure_scrub_memory()</text>
+                    <text x="380" y="115" fill="#ff8c00" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Compiler Barrier Enabled]</text>
+                    
+                    <path d="M 490 90 L 560 90" stroke="#ffd700" stroke-width="1.5" marker-end="url(#arrow4)" />
+                    <text x="525" y="80" fill="#ffd700" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Overwriting</text>
+                    
+                    <!-- Step 3: Cleared memory (Vantablack) -->
+                    <rect x="580" y="40" width="230" height="100" rx="4" fill="#030303" stroke="#00ffff" stroke-width="1.5" />
+                    <!-- Visual representation of memory blocks turning Vantablack -->
+                    <rect x="590" y="50" width="210" height="20" fill="url(#scrubGradient)" />
+                    <text x="695" y="90" fill="#00ffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">Scrubbed RAM</text>
+                    <text x="695" y="110" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">0x0000000000000000</text>
+                    <text x="695" y="125" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">[Forensic Proof Complete]</text>
+                </svg>
+            </div>
+
+            <p><strong>Diagram 5: TACO Spatial Indexing & 6G ISAC Radar Mapping</strong></p>
+            <div class="diagram-container">
+                <svg width="850" height="260" viewBox="0 0 850 260" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <marker id="arrow5" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00ffff" />
+                        </marker>
+                    </defs>
+                    
+                    <!-- Left: RF multipath CSI delays -->
+                    <rect x="20" y="40" width="200" height="180" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="120" y="65" fill="#ffd700" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">6G ISAC RF Sensing</text>
+                    <path d="M 40 120 Q 60 80, 80 120 T 120 120 T 160 120 T 200 120" fill="none" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="120" y="170" fill="#888888" font-family="JetBrains Mono" font-size="9" text-anchor="middle">CSI Subcarrier Delays</text>
+                    <text x="120" y="195" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Multipath Doppler Shift</text>
+                    
+                    <path d="M 220 130 L 290 130" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow5)" />
+                    <text x="255" y="115" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Map to R-Tree</text>
+                    
+                    <!-- Middle: TACO R-Tree 3D Coordinates -->
+                    <rect x="310" y="40" width="220" height="180" rx="4" fill="rgba(10,10,10,0.8)" stroke="#00ffff" stroke-width="1.5" />
+                    <text x="420" y="65" fill="#ffffff" font-family="JetBrains Mono" font-size="11" text-anchor="middle">TACO R-Tree 3D Engine</text>
+                    <!-- R-Tree nodes visualization -->
+                    <rect x="330" y="90" width="180" height="80" fill="none" stroke="rgba(255,215,0,0.4)" stroke-width="1" />
+                    <rect x="350" y="110" width="60" height="40" fill="none" stroke="#00ffff" stroke-width="1" />
+                    <rect x="430" y="100" width="60" height="45" fill="none" stroke="#ff8c00" stroke-width="1" />
+                    <text x="420" y="200" fill="#ffd700" font-family="JetBrains Mono" font-size="9" text-anchor="middle">BoundingBox3D Nodes</text>
+                    
+                    <path d="M 530 130 L 600 130" stroke="#00ffff" stroke-width="1.5" marker-end="url(#arrow5)" />
+                    <text x="565" y="115" fill="#00ffff" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Plot Coordinates</text>
+                    
+                    <!-- Right: Passive 3D radar map -->
+                    <rect x="620" y="40" width="200" height="180" rx="4" fill="rgba(10,10,10,0.8)" stroke="#ffd700" stroke-width="1.5" />
+                    <text x="720" y="65" fill="#ffd700" font-family="JetBrains Mono" font-size="11" font-weight="bold" text-anchor="middle">3D Spatial Radar Map</text>
+                    <!-- 3D coordinate target representation -->
+                    <circle cx="720" cy="130" r="25" fill="none" stroke="#ff8c00" stroke-width="1.5" stroke-dasharray="3,3" />
+                    <circle cx="720" cy="130" r="5" fill="#ff3333" />
+                    <text x="720" y="185" fill="#ffffff" font-family="JetBrains Mono" font-size="9" text-anchor="middle">Target: [x, y, z]</text>
+                    <text x="720" y="205" fill="#ff8c00" font-family="JetBrains Mono" font-size="8" text-anchor="middle">Millimeter Resolution</text>
                 </svg>
             </div>
         </div>
