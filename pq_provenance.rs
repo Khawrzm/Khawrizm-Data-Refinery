@@ -194,4 +194,34 @@ mod tests {
         let _ = std::fs::remove_file(secret_key_path);
         let _ = std::fs::remove_file(public_key_path);
     }
+
+    #[test]
+    fn test_signature_fuzzing() {
+        let data = b"Khawrizm Sovereign OS Fuzzing Payload";
+        let secret_key_path = "test_fuzz_key.bin";
+        let public_key_path = "test_fuzz_key.bin.pub";
+
+        // Generate a valid keypair first to ensure verify_pq has keys to read
+        let _ = std::fs::remove_file(secret_key_path);
+        let _ = std::fs::remove_file(public_key_path);
+        let _ = load_or_generate_keys(secret_key_path, public_key_path);
+
+        // Minimal seedable XORshift PRNG
+        let mut seed: u64 = 0x123456789ABCDEF;
+        for _ in 0..100 {
+            let mut rand_sig = vec![0u8; 4096];
+            for byte in rand_sig.iter_mut() {
+                seed ^= seed << 13;
+                seed ^= seed >> 7;
+                seed ^= seed << 17;
+                *byte = (seed & 0xFF) as u8;
+            }
+            let verified = verify_pq(data, &rand_sig, public_key_path);
+            assert!(!verified, "Random fuzz signature must fail verification");
+        }
+
+        // Clean up
+        let _ = std::fs::remove_file(secret_key_path);
+        let _ = std::fs::remove_file(public_key_path);
+    }
 }
