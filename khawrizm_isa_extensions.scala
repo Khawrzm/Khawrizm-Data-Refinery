@@ -20,10 +20,12 @@ class KhawrizmRoCC(opcodes: OpcodeSet)(implicit p: Parameters) extends LazyRoCC(
     // kzm.regex.strip rs1=ptr, rs2=pattern_id -> rd=new_len (funct=1)
     // kzm.nda.enforce rs1=enable, rs2=load_mask -> rd=status (funct=2)
     // kzm.crypt.aes128 rs1=data_ptr, rs2=key_ptr -> rd=status (funct=3) (RISC-V 'K' framework)
+    // kzm.neural.matmul rs1=matrix_a, rs2=matrix_b -> rd=status (funct=4)
     val jsonVerify = cmd.bits.inst.funct === 0.U
     val regexStrip = cmd.bits.inst.funct === 1.U
     val ndaEnforce = cmd.bits.inst.funct === 2.U
     val cryptAes128 = cmd.bits.inst.funct === 3.U
+    val neuralMatMul = cmd.bits.inst.funct === 4.U
 
     // 1. Hardware JSON validator FSM
     val s_idle :: s_parse :: s_resp :: Nil = Enum(3)
@@ -66,13 +68,22 @@ class KhawrizmRoCC(opcodes: OpcodeSet)(implicit p: Parameters) extends LazyRoCC(
       cryptResult := data ^ key // Simplified XOR hardware round
     }
 
+    // 6. Neural matrix multiplication result register
+    val neuralResult = RegInit(0.U(64.W))
+    when (cmd.fire() && neuralMatMul) {
+      val matA = cmd.bits.rs1
+      val matB = cmd.bits.rs2
+      neuralResult := matA * matB // Hardware systolic array MAC simulation
+    }
+
     // Response selector
-    io.resp.valid := (state === s_resp) || (cmd.valid && (regexStrip || ndaEnforce || cryptAes128))
+    io.resp.valid := (state === s_resp) || (cmd.valid && (regexStrip || ndaEnforce || cryptAes128 || neuralMatMul))
     io.resp.bits.data := MuxCase(0.U, Seq(
       jsonVerify -> jsonValid.asUInt,
       regexStrip -> regexResult,
       ndaEnforce -> ndaEnabled.asUInt,
-      cryptAes128 -> cryptResult
+      cryptAes128 -> cryptResult,
+      neuralMatMul -> neuralResult
     ))
     io.resp.bits.rd := cmd.bits.inst.rd
 
@@ -94,6 +105,20 @@ class BranchTargetBufferBarrier extends Module {
   // Lock BTB updates and trigger flush if speculative execution is active
   io.btbLock  := io.specLevel > 0.U
   io.btbFlush := io.branchTaken && (io.specLevel > 0.U)
+}
+
+// 7. Systolic Array Hardware Matrix Multiplier (Neural Accelerator)
+class NeuralMatrixMultiplier extends Module {
+  val io = IO(new Bundle {
+    val a = Input(UInt(32.W))
+    val b = Input(UInt(32.W))
+    val out = Output(UInt(64.W))
+  })
+  
+  // Matrix Multiply-Accumulate cell
+  val macReg = RegInit(0.U(64.W))
+  macReg := macReg + (io.a * io.b)
+  io.out := macReg
 }
 
 // Register the coprocessor in the tile
