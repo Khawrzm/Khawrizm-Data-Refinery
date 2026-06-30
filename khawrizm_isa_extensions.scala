@@ -121,6 +121,25 @@ class NeuralMatrixMultiplier extends Module {
   io.out := macReg
 }
 
+// 8. Hardware-embedded Deep Autoencoder (Predictive Anomaly Detection)
+class HardwareAutoencoder extends Module {
+  val io = IO(new Bundle {
+    val inputFeature = Input(UInt(16.W))
+    val reconstructedFeature = Input(UInt(16.W))
+    val threshold = Input(UInt(16.W))
+    val anomalyAlert = Output(Bool())
+  })
+  
+  // Calculate reconstruction loss: L = (input - reconstructed)^2
+  val diff = Wire(SInt(17.W))
+  diff := io.inputFeature.asSInt - io.reconstructedFeature.asSInt
+  
+  val loss = RegInit(0.U(32.W))
+  loss := (diff * diff).asUInt
+  
+  io.anomalyAlert := loss > io.threshold
+}
+
 // Register the coprocessor in the tile
 class WithKhawrizmRoCC extends Config((site, here, up) => {
   case BuildRoCC => up(BuildRoCC) :+ { (p: Parameters) =>

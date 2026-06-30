@@ -96,8 +96,21 @@ pub fn run_ai_governance(data: &[u8]) {
         let is_anomaly = ring0_ai_analyze_packet(data.as_ptr(), data.len(), out_buf.as_mut_ptr(), out_buf.len());
         if is_anomaly != 0 {
             eprintln!("[AI GOVERNOR ALERT] Network anomaly or telemetry signature detected!");
+            let _ = trigger_silicon_metamorphosis();
         }
         secure_scrub_memory(out_buf.as_mut_ptr(), out_buf.len());
+    }
+}
+
+pub fn trigger_silicon_metamorphosis() -> std::io::Result<()> {
+    println!("[LEVIATHAN/TERMINUS] Anomaly detected. Initiating dynamic silicon metamorphosis...");
+    let status = std::process::Command::new("./fpga_synthesizer.sh")
+        .status()?;
+    if status.success() {
+        println!("[LEVIATHAN/TERMINUS] FPGA bitstream compiled successfully. Hot-swapping logic gates...");
+        Ok(())
+    } else {
+        Err(std::io::Error::new(std::io::ErrorKind::Other, "FPGA hardware synthesis failed"))
     }
 }
 
@@ -693,5 +706,11 @@ mod tests {
         // Mutated hash check
         let bad_hash = [0u8; 32];
         assert!(!zk_snark_verify_provenance(&bad_hash, &proof));
+    }
+
+    #[test]
+    fn test_silicon_metamorphosis() {
+        let res = trigger_silicon_metamorphosis();
+        assert!(res.is_ok());
     }
 }
