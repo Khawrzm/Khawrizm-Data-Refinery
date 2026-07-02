@@ -1,3 +1,4 @@
+#include "network_bypass/dpdk_joyride.h"
 #include "xcv_wrapper.h"
 #include <iostream>
 
@@ -23,5 +24,7 @@ rust::String TacoEngine::evaluate_cell(rust::Str formula) const {
 }
 
 std::unique_ptr<TacoEngine> create_taco_engine() {
+    Khawrizm::Network::JoyrideBypass::joyride_sriov_init(0);
+    Khawrizm::Network::JoyrideBypass::intercept_sockets();
     return std::make_unique<TacoEngine>();
 }
