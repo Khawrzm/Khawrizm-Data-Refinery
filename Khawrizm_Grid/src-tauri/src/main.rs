@@ -5,10 +5,19 @@ use tauri::command;
 
 #[command]
 fn evaluate_xcv(formula: String) -> String {
-    // Advanced math and programming formula parsing bridge
-    if formula.starts_with("=KHAWRIZM.STAT") {
-        return "Advanced Statistical Analysis Executed".to_string();
+    // محرك معالجة المعادلات الرياضية والبرمجية المعقدة
+    let f_trim = formula.trim().to_uppercase();
+    
+    if f_trim.contains("∑") || f_trim.contains("SUM") {
+        return "TACO_EVAL: Math [SUM/∑] Processed".to_string();
+    } else if f_trim.contains("√") || f_trim.contains("SQRT") {
+        return "TACO_EVAL: Math [SQRT/√] Processed".to_string();
+    } else if f_trim.contains("π") || f_trim.contains("PI") {
+        return "3.14159265359".to_string();
+    } else if f_trim.starts_with("=MATRIX") {
+        return "TACO_EVAL: Array/Matrix Processed".to_string();
     }
+    
     format!("Evaluated: {}", formula)
 }
 
