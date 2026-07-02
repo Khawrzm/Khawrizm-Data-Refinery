@@ -6,7 +6,7 @@ use std::io::{self, Write};
 fn main() {
     println!("--- KHAWRIZM XCV ENGINE v1.0 ---");
     let mut sheet = XcvSheet::new("Live_Sheet");
-    let engine = ffi::new_engine();
+    let engine = ffi::create_taco_engine();
 
     loop {
         print!("\nXCV_Core> ");
@@ -29,7 +29,7 @@ fn main() {
             }
             "EVAL" if parts.len() == 2 => {
                 if let CellValue::Formula(f) = sheet.get_cell(parts[1]) {
-                    println!("[✓] {} -> {}", f, engine.evaluate_formula(&f, &sheet));
+                    println!("[✓] {} -> {}", f, engine.evaluate_cell(&f));
                 }
             }
             "EXIT" => break,

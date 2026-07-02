@@ -1,7 +1,8 @@
 #[tauri::command]
 fn evaluate_xcv(formula: String) -> String {
-    // This is the IPC entry point. Later, it will route to XCV_Engine C++ bindings.
-    format!("XCV_RESULT: Processed '{}' via Ring-0 Engine", formula)
+    // استدعاء محرك TACO المكتوب بـ C++ لمعالجة الخلية بتعقيد O(1)
+    let engine = xcv_engine::ffi::create_taco_engine();
+    engine.evaluate_cell(&formula)
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
