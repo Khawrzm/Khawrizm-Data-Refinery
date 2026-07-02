@@ -1,0 +1,19 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "sovereign-io",
+  "description": "Sovereign Air-Gapped I/O Permissions",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "dialog:default",
+    "fs:default",
+    {
+      "identifier": "fs:allow-read-file",
+      "allow": ["**"]
+    },
+    {
+      "identifier": "fs:allow-write-file",
+      "allow": ["**"]
+    }
+  ]
+}
