@@ -1,0 +1,1 @@
+4c44270e73d7d151c5a6420c101665e504bd99ba7eed48fc799118d1c1666da8  Khawrizm_Grid/src-tauri/target/x86_64-pc-windows-gnu/release/bundle/nsis/khawrizm_grid_0.1.0_x64-setup.exe
