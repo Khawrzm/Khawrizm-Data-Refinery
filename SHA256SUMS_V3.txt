@@ -1,0 +1,2 @@
+2952d3e676bb74eb819898a318d426d205fdbf87e82a259e70984bc31929801d  Khawrizm_Office_Ultimate_V3.0.zip
+b283b5f79ae7fd0b4ffa176579b0feae5032486ab54f072fb93f326592407a5b  releases/OFFICE_V3/Khawrizm_Office_V3.0_Setup.exe
