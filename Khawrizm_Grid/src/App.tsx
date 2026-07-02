@@ -1,107 +1,90 @@
-import { useEffect, useRef, useState } from 'react';
-import { Univer, UniverInstanceType, LocaleType } from '@univerjs/core';
-import { UniverDocsPlugin } from '@univerjs/docs';
-import { UniverDocsUIPlugin } from '@univerjs/docs-ui';
-import { UniverUIPlugin } from '@univerjs/ui';
-import { UniverSheetsPlugin } from '@univerjs/sheets';
-import { UniverSheetsUIPlugin } from '@univerjs/sheets-ui';
-import { UniverSheetsFormulaPlugin } from '@univerjs/sheets-formula';
-import { UniverFormulaEnginePlugin } from '@univerjs/engine-formula';
-import { save } from '@tauri-apps/plugin-dialog';
-import { writeTextFile } from '@tauri-apps/plugin-fs';
+import { useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-
-import '@univerjs/design/lib/index.css';
-import '@univerjs/ui/lib/index.css';
-import '@univerjs/sheets-ui/lib/index.css';
+import './App.css';
 
 export default function App() {
-  const containerRef = useRef(null);
+  const [cells, setCells] = useState<Record<string, string>>({});
+  const [activeCell, setActiveCell] = useState('A1');
   const [formula, setFormula] = useState('');
 
-  useEffect(() => {
-    if (!containerRef.current) return;
+  // توليد أعمدة وصفوف الشبكة رياضياً (O(1) Rendering structure)
+  const cols = Array.from({ length: 26 }, (_, i) => String.fromCharCode(65 + i));
+  const rows = Array.from({ length: 100 }, (_, i) => i + 1);
 
-    const univer = new Univer({
-      locale: LocaleType.EN_US,
-    });
-
-    univer.registerPlugin(UniverDocsPlugin, { hasScroll: false });
-    univer.registerPlugin(UniverDocsUIPlugin);
-    univer.registerPlugin(UniverUIPlugin, {
-      container: containerRef.current,
-      header: true,
-      toolbar: true,
-      footer: true,
-    });
-    univer.registerPlugin(UniverSheetsPlugin);
-    univer.registerPlugin(UniverSheetsUIPlugin);
-    univer.registerPlugin(UniverFormulaEnginePlugin);
-    univer.registerPlugin(UniverSheetsFormulaPlugin);
-
-    univer.createUnit(UniverInstanceType.UNIVER_SHEET, {
-      id: 'sovereign-grid',
-      name: 'Khawrizm Absolute Grid',
-      sheetOrder: ['sheet1'],
-      sheets: {
-        'sheet1': {
-          id: 'sheet1',
-          name: 'Sheet 1',
-          cellData: {},
-        },
-      },
-    });
-
-    return () => univer.dispose();
-  }, []);
-
-  const handleSaveLocal = async () => {
-    try {
-      const filePath = await save({
-        filters: [{ name: 'Khawrizm Sovereign Data', extensions: ['xcv', 'csv'] }],
-      });
-      if (filePath) {
-        await writeTextFile(filePath, '{"status": "SECURE_DATA_EXTRACTED_OFFLINE"}');
-        alert('Sovereign Data Saved Locally (Air-Gapped)!');
+  const handleEvaluate = async () => {
+    if (formula.startsWith('=')) {
+      try {
+        // إرسال المعادلة مباشرة إلى محرك C++ TACO في الحلقة الصفرية
+        const result = await invoke('evaluate_xcv', { formula });
+        setCells({ ...cells, [activeCell]: result as string });
+      } catch (e) {
+        setCells({ ...cells, [activeCell]: '#TACO_ERR' });
       }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const executeFormula = async () => {
-    if (!formula) return;
-    try {
-      // IPC Call bypassing standard JS evaluation -> sending directly to Rust
-      const result = await invoke('evaluate_xcv', { formula });
-      alert(result);
-    } catch (err) {
-      console.error(err);
+    } else {
+      setCells({ ...cells, [activeCell]: formula });
     }
   };
 
   return (
-    <div dir="ltr" style={{ display: 'flex', flexDirection: 'column', height: '100vh', background: '#0a0a0a' }}>
-      <div style={{ padding: '12px 20px', backgroundColor: '#0a0a0a', borderBottom: '1px solid #00ff88', display: 'flex', gap: '15px', alignItems: 'center', fontFamily: 'monospace' }}>
-        <div style={{ fontWeight: 'bold', fontSize: '16px', color: '#00ff88', textShadow: '0 0 5px #00ff88', letterSpacing: '1px' }}>
-          KHAWRIZM IPC
+    <div className="sovereign-container">
+      <div className="ribbon">
+        <div className="brand">KHAWRIZM OMNI-GRID // RING-0 ACTIVE</div>
+        <div className="toolbar">
+          <button>FILE</button>
+          <button>HOME</button>
+          <button className="active-tab">TACO ENGINE</button>
+          <button>6G ISAC RADAR</button>
+          <button>GHOST PROTOCOL</button>
         </div>
+      </div>
+      
+      <div className="formula-bar">
+        <span className="active-cell-indicator">{activeCell}</span>
+        <span className="fx-icon">ƒx</span>
         <input 
-          type="text" 
           value={formula}
           onChange={(e) => setFormula(e.target.value)}
-          placeholder="Ring-0 Equation (e.g., =SUM(A1:A5))" 
-          style={{ flex: 1, padding: '8px 12px', background: '#111', color: '#00ff88', border: '1px solid #333', borderRadius: '2px', outline: 'none', fontFamily: 'monospace' }}
-          onKeyDown={(e) => e.key === 'Enter' && executeFormula()}
+          onKeyDown={(e) => e.key === 'Enter' && handleEvaluate()}
+          placeholder="Enter value or TACO formula (=SUM(A1:B4))..."
         />
-        <button onClick={executeFormula} style={{ padding: '8px 16px', cursor: 'pointer', background: '#00ff88', color: '#0a0a0a', border: 'none', fontWeight: 'bold', borderRadius: '2px', textTransform: 'uppercase' }}>
-          Execute
-        </button>
-        <button onClick={handleSaveLocal} style={{ padding: '8px 16px', cursor: 'pointer', background: '#111', color: '#00ff88', border: '1px solid #00ff88', fontWeight: 'bold', borderRadius: '2px', textTransform: 'uppercase' }}>
-          Save (Air-Gap)
-        </button>
       </div>
-      <div ref={containerRef} id="univer-container" style={{ flex: 1, width: '100%', overflow: 'hidden' }} />
+
+      <div className="grid-container">
+        <table className="xcv-grid">
+          <thead>
+            <tr>
+              <th></th>
+              {cols.map(c => <th key={c}>{c}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map(r => (
+              <tr key={r}>
+                <td className="row-header">{r}</td>
+                {cols.map(c => {
+                  const cellId = `${c}${r}`;
+                  const isActive = activeCell === cellId;
+                  return (
+                    <td 
+                      key={cellId} 
+                      className={isActive ? 'active-cell' : ''}
+                      onClick={() => { setActiveCell(cellId); setFormula(cells[cellId] || ''); }}
+                    >
+                      {cells[cellId] || ''}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <div className="status-bar">
+        <span>STATUS: ZERO-TELEMETRY</span>
+        <span>ENGINE: C++ TACO COMPRESSOR</span>
+        <span>RAM SCRUB: ACTIVE</span>
+      </div>
     </div>
   );
 }

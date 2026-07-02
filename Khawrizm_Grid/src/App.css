@@ -1,116 +1,44 @@
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafb);
-}
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-
-  color: #0f0f0f;
-  background-color: #f6f6f6;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  --vantablack: #020202;
+  --panel-bg: #0a0a0a;
+  --border-neon: #00ff41;
+  --text-main: #e0e0e0;
+  --accent: #00ff41;
+  --cell-border: #1a1a1a;
+  --cell-bg: #050505;
+  --cell-active: #002200;
+  --header-bg: #111111;
 }
 
-.container {
-  margin: 0;
-  padding-top: 10vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+body { 
+  margin: 0; 
+  background: var(--vantablack); 
+  color: var(--text-main); 
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+  overflow: hidden; 
+  user-select: none;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: 0.75s;
-}
+.sovereign-container { display: flex; flex-direction: column; height: 100vh; }
 
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
+.ribbon { background: var(--panel-bg); border-bottom: 1px solid var(--accent); padding: 8px 15px; }
+.brand { color: var(--accent); font-weight: bold; font-size: 1.1rem; letter-spacing: 3px; margin-bottom: 12px; text-shadow: 0 0 5px rgba(0,255,65,0.5); font-family: 'Courier New', monospace;}
 
-.row {
-  display: flex;
-  justify-content: center;
-}
+.toolbar button { background: transparent; border: 1px solid var(--cell-border); color: #888; padding: 6px 16px; margin-right: 5px; cursor: pointer; transition: all 0.2s; font-size: 0.85rem; font-weight: bold;}
+.toolbar button:hover, .toolbar button.active-tab { border-color: var(--accent); color: var(--accent); box-shadow: inset 0 0 8px rgba(0,255,65,0.2); }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
+.formula-bar { display: flex; align-items: center; padding: 5px; background: var(--panel-bg); border-bottom: 1px solid var(--cell-border); }
+.active-cell-indicator { width: 50px; text-align: center; font-weight: bold; color: var(--accent); padding: 5px; border-right: 1px solid var(--cell-border); font-family: 'Courier New', monospace;}
+.fx-icon { padding: 0 10px; color: #888; font-style: italic; font-weight: bold; }
+.formula-bar input { flex: 1; background: var(--vantablack); border: 1px solid var(--cell-border); color: var(--accent); padding: 6px 10px; font-family: 'Courier New', monospace; outline: none; font-size: 0.95rem; }
+.formula-bar input:focus { border-color: var(--accent); }
 
-a:hover {
-  color: #535bf2;
-}
+.grid-container { flex: 1; overflow: auto; background: var(--vantablack); }
+.xcv-grid { border-collapse: collapse; width: 100%; table-layout: fixed; }
+.xcv-grid th { background: var(--header-bg); border: 1px solid var(--cell-border); color: #888; font-weight: normal; padding: 4px; position: sticky; top: 0; z-index: 2; width: 100px; font-size: 0.85rem;}
+.row-header { background: var(--header-bg); border: 1px solid var(--cell-border); color: #888; text-align: center; position: sticky; left: 0; z-index: 1; width: 40px !important; font-size: 0.85rem;}
+.xcv-grid td { border: 1px solid var(--cell-border); background: var(--cell-bg); padding: 4px 8px; min-width: 100px; height: 22px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; cursor: cell; color: #ccc; font-family: 'Segoe UI', sans-serif;}
+.xcv-grid td.active-cell { border: 2px solid var(--accent); background: var(--cell-active); color: #fff; box-shadow: inset 0 0 10px rgba(0,255,65,0.1); outline: none; padding: 3px 7px;}
 
-h1 {
-  text-align: center;
-}
-
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-  cursor: pointer;
-}
-
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
-}
-
-input,
-button {
-  outline: none;
-}
-
-#greet-input {
-  margin-right: 5px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
-}
+.status-bar { display: flex; justify-content: space-between; background: var(--panel-bg); border-top: 1px solid var(--cell-border); padding: 4px 15px; font-size: 0.75rem; color: #555; font-family: 'Courier New', monospace;}
+.status-bar span { display: flex; align-items: center; }
