@@ -1,3 +1,4 @@
+#include "taco_core/tabular_locality.h"
 #include "network_bypass/dpdk_joyride.h"
 #include "xcv_wrapper.h"
 #include <iostream>
@@ -15,6 +16,9 @@ rust::String TacoEngine::evaluate_cell(rust::Str formula) const {
     std::cout << "[TACO C++ Ring-0] Evaluating & Securing: " << f_str << std::endl;
     
     // O(1) Mathematical TACO DAG evaluation logic
+    Khawrizm::TACO::DirectedAcyclicGraph dag;
+    dag.insert_dependency(f_str, {{0,0}, {0,5}}, {{1,0}, {1,5}});
+    dag.evaluate_graph();
     std::string result = "TACO_COMPUTED: [" + f_str + "] -> O(1) EXECUTION SUCCESS";
     
     // Cryptographic amnesia: Scrub the raw formula string from volatile RAM
